@@ -6,6 +6,7 @@ import { COLORS, FONTS, SIZES, icons } from '../constants';
 import Button from '../components/Button';
 import { EvilIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 const KicksCounter = ({ navigation }) => {
@@ -17,10 +18,7 @@ const KicksCounter = ({ navigation }) => {
   const [count, setCount] = useState(until);
   const [running, setRunning] = useState(false);
   const [kicksData, setKicksData] = useState([]);
-
-
-  console.log(count);
-  console.log(running);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let interval;
@@ -77,15 +75,15 @@ const KicksCounter = ({ navigation }) => {
 
   const removeItem = (index) => {
     Alert.alert(
-      'Kayıt Silinecek',
-      'Kaydı silmek istediğinize emin misiniz?',
+      `${t.deleteRecord}`,
+      `${t.sureDelete}`,
       [
         {
-          text: 'Hayır',
+          text: `${t.cancel}`,
           onPress: () => {},
         },
         {
-          text: 'Evet',
+          text: `${t.yes}`,
           onPress: () => {
             setKicksData(prevData => prevData.filter((_, i) => i !== index));
           },
@@ -100,8 +98,8 @@ const KicksCounter = ({ navigation }) => {
       <Text style={styles.itemText}>{item.date}</Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
       <View>
-      <Text style={styles.itemText}>Hareket Sayısı: {item.kicksCount}</Text>
-      <Text style={styles.itemText}>Süre: {formatZaman(until-(item.runningCount))}</Text>
+      <Text style={styles.itemText}>{t.movementCount}: {item.kicksCount}</Text>
+      <Text style={styles.itemText}>{t.time}: {formatZaman(until-(item.runningCount))}</Text>
       </View>
       <EvilIcons style={{marginTop: 10}} name="trash" size={35} color={COLORS.primary} onPress={() => removeItem(index)}/>
       </View>
@@ -156,7 +154,7 @@ const KicksCounter = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Kicks Counter
+            {t.kicksCounter}
           </Text>
         </View>
       </View>
@@ -189,7 +187,7 @@ const KicksCounter = ({ navigation }) => {
     {/* <Button onPress={() => {setKicksCount(0)}} title='Sıfırla' /> */}
     <Text style={[{fontSize: 16}, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Bebeğinizin hareketlerini saymaya başlamadan önce zamanı not edin, önümüzdeki 2 saat boyunca 10 hareket sayarsanız, bebek rahattır ve her şey yolundadır.</Text>
+            }]}>{t.kicksCounterTitle}</Text>
     </View>
 
 
@@ -198,15 +196,15 @@ const KicksCounter = ({ navigation }) => {
               <Text style={styles.timeCounter}>{formatZaman(count)}</Text>
               <View style={{flex: 1, width: SIZES.width -200, marginTop: 5 }}>
               {!running && count === until || count === 0 ? (
-              <Button title="Başlat" filled onPress={handleStartMode} style={{ marginTop: 5}}/>
+              <Button title={t.start} filled onPress={handleStartMode} style={{ marginTop: 5}}/>
               ) : running ? (
-              <Button title="Durdur" onPress={handleStopMode} style={{ marginTop: 5}}/>
+              <Button title={t.stop} onPress={handleStopMode} style={{ marginTop: 5}}/>
               ) : (
-                <Button title="Sürdür" filled onPress={handleStartMode} style={{ marginTop: 5}}/>
+                <Button title={t.sustain} filled onPress={handleStartMode} style={{ marginTop: 5}}/>
               )}
 
-              <Button title="Sıfırla" filled onPress={handleResetMode} style={{ marginTop: 5}}/>
-              <Button title="Tamamla" filled onPress={() => {count < until && handleAddItem()}} style={{ marginTop: 5}}/>
+              <Button title={t.reset} filled onPress={handleResetMode} style={{ marginTop: 5}}/>
+              <Button title={t.complete} filled onPress={() => {count < until && handleAddItem()}} style={{ marginTop: 5}}/>
 
               </View>
           </View> 

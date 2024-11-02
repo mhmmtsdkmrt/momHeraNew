@@ -2,13 +2,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
-import { FONTS } from '@/constants/fonts'
+import { FONTS } from '@/constants/fonts';
 import AppNavigation from '@/navigations/AppNavigation';
 import { ProfileProvider } from '@/Contexts/ProfileGetApi';
-import { ThemeProvider } from '@/theme/ThemeProvider'
+import { ThemeProvider } from '@/theme/ThemeProvider';
 import { SelectedProvider } from '@/utils/SelectedContext';
 import { LogBox } from 'react-native';
-import {WeightProvider} from '@/Contexts/WeightContext';
+import { WeightProvider } from '@/Contexts/WeightContext';
+import TranslationsProvider from '@/Contexts/LanguageContext';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -29,7 +30,6 @@ export default function App() {
   }, [loaded]);
 
 
-
   if (!loaded) {
     return null;
   }
@@ -38,15 +38,17 @@ export default function App() {
 
        <ThemeProvider>
         <SelectedProvider>
-          <SafeAreaProvider>
-           <ProfileProvider>
-            <WeightProvider>
-                <AppNavigation/>
-            </WeightProvider>
-           </ProfileProvider>
-          </SafeAreaProvider>
+          <TranslationsProvider>
+            <SafeAreaProvider>
+              <ProfileProvider>
+                <WeightProvider>
+                  <AppNavigation/>
+                </WeightProvider>
+              </ProfileProvider>
+            </SafeAreaProvider>
+            </TranslationsProvider>
         </SelectedProvider>
        </ThemeProvider>
 
   );
-} 
+}

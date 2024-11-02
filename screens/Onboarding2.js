@@ -7,10 +7,12 @@ import Button from '../components/Button';
 import Onboarding1Styles from '../styles/OnboardingStyles';
 import { COLORS, images } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const Onboarding2 = ({ navigation }) => {
   const [progress, setProgress] = useState(0);
-  const { colors } = useTheme()
+  const { colors } = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -52,25 +54,25 @@ const Onboarding2 = ({ navigation }) => {
           />
           <View style={Onboarding1Styles.buttonContainer}>
             <View style={Onboarding1Styles.titleContainer}>
-              <Text style={[Onboarding1Styles.title, { color: colors.text }]}>Yolculuğunuzun tadını momHera ile </Text>
-              <Text style={Onboarding1Styles.subTitle}>çıkarın.</Text>
+              <Text style={[Onboarding1Styles.title, { color: colors.text }]}>{t.onboardingTitle2} </Text>
+              <Text style={Onboarding1Styles.subTitle}>{t.onboardingTitle3} </Text>
             </View>
 
             <Text style={[Onboarding1Styles.description, { color: colors.text }]}>
-            Nerede olursanız olun momHera her zaman yanınızda.
+            {t.onboardingTitle4}
             </Text>
 
             <View style={Onboarding1Styles.dotsContainer}>
               {progress < 1 && <DotsView progress={progress} numDots={4} />}
             </View>
             <Button
-              title="Next"
+              title={t.next}
               filled
               onPress={() => navigation.navigate('Onboarding3')}
               style={Onboarding1Styles.nextButton}
             />
             <Button
-              title="Skip"
+              title={t.skip}
               onPress={() => navigation.navigate('Login')}
               textColor={COLORS.primary}
               style={Onboarding1Styles.skipButton}

@@ -14,6 +14,10 @@ import { useTheme } from '../theme/ThemeProvider';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiLogin } from '../apiConnections/RegisterApi';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from '../Contexts/useTranslation';
+
+
 
 
 const isTestMode = false
@@ -36,6 +40,8 @@ const Login = ({ navigation }) => {
   const [error, setError] = useState(null)
   const [isChecked, setChecked] = useState(false);
   const { colors, dark } = useTheme();
+
+  const {t} = useTranslation();
 
 
   const inputChangedHandler = useCallback(
@@ -65,7 +71,7 @@ const Login = ({ navigation }) => {
     // error useffect
     useEffect(() => {
       if (error) {
-        Alert.alert('An error occured', error)
+        Alert.alert(`${anErrorOccured}`, error)
       }
     }, [error])
 
@@ -75,7 +81,12 @@ const Login = ({ navigation }) => {
     const password = formState.inputValues.password;
 
     if (!formState.formIsValid) {
-      Alert.alert('Invalid input', 'Please check your input values.');
+      Alert.alert(`${t.invalid}`, `${t.pleaseCheckInput}`, [
+        {
+          text: `${t.ok}`,
+          onPress: () => null
+        },
+      ]);
       return;
     }
 
@@ -88,13 +99,13 @@ const Login = ({ navigation }) => {
     if (result.success) {
       navigation.navigate("Main"); // Bir sonraki sayfaya yönlendirme
     } else {
-      Alert.alert('Hata', result.message, [
+      Alert.alert(`${t.anErrorOccured}`, `${t.pleaseCheckInput}`, [
         {
-          text: 'Parola Sıfırla',
+          text: `${t.resetPassword}`,
           onPress: ()=>navigation.navigate("ForgotPasswordMethods")
         },
         {
-          text: 'OK',
+          text: `${t.ok}`,
           onPress: () => null
         },
       ]);
@@ -116,7 +127,7 @@ const Login = ({ navigation }) => {
           </View>
           <Text style={[styles.title, { 
             color: dark ? COLORS.white : COLORS.black
-          }]}>Login to Your Account</Text>
+          }]}>{t.loginToYourAccount}</Text>
             <Input
               id="email"
               onInputChanged={inputChangedHandler}
@@ -131,7 +142,7 @@ const Login = ({ navigation }) => {
               errorText={formState.inputValidities['password']}
               autoCapitalize="none"
               id="password"
-              placeholder="Password"
+              placeholder={t.password}
               placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
               icon={icons.padlock}
               secureTextEntry={true}
@@ -147,23 +158,41 @@ const Login = ({ navigation }) => {
                 <View style={{ flex: 1 }}>
                   <Text style={[styles.privacy, {
                     color: dark ? COLORS.white : COLORS.black
-                  }]}>Remenber me</Text>
+                  }]}>{t.rememberMe}</Text>
                 </View>
               </View>
             </View>
             <Button
-              title="Login"
+              title={t.login}
               filled
               onPress={handleLogin}
               style={styles.button}
             />
+              <View style={{ height: 50}}>
+              <LinearGradient colors={['#f85032', '#ff9068']} style={{ flex: 1, paddingLeft: 15, paddingRight: 15, borderRadius: 25}}>
+                <Text style={{ fontSize: 18, fontFamily: 'semiBold', textAlign: 'center', margin: 10, color: '#ffffff', backgroundColor: 'transparent'}}>Login</Text>
+              </LinearGradient>
+              </View>
+              <View style={{ height: 50, marginTop: 10}}>
+              <LinearGradient start={[0, 0.5]} end={[1, 0.5]} colors={['#ff6e7f', '#bfe9ff']} style={{ flex: 1, paddingLeft: 15, paddingRight: 15, borderRadius: 25}}>
+                <Text style={{ fontSize: 18, fontFamily: 'semiBold', textAlign: 'center', margin: 10, color: '#ffffff', backgroundColor: 'transparent'}}>Login</Text>
+              </LinearGradient>
+              </View>
+              <View style={{ height: 50, marginTop: 10}}>
+              <LinearGradient start={[1, 0.5]} end={[0, 0.5]} colors={['#ED4264', '#FFEDBC']} background='right' style={{ flex: 1, paddingLeft: 15, paddingRight: 15, borderRadius: 25}}>
+                <Text style={{ fontSize: 18, fontFamily: 'semiBold', textAlign: 'center', margin: 10, color: '#ffffff', backgroundColor: 'transparent'}}>Login</Text>
+              </LinearGradient>
+              </View>
+
+
+
             <TouchableOpacity
              onPress={()=>navigation.navigate("ForgotPasswordMethods")}>
-              <Text style={styles.forgotPasswordBtnText}>Forgot the password?</Text>
+              <Text style={styles.forgotPasswordBtnText}>{t.forgotPassword}</Text>
             </TouchableOpacity>
             <View>
              
-              <OrSeparator text="or continue with"/>
+              <OrSeparator text={t.orContinueWith}/>
               <View style={styles.socialBtnContainer}>
                 <SocialButton
                   icon={icons.appleLogo}
@@ -182,10 +211,10 @@ const Login = ({ navigation }) => {
               <View style={styles.bottomContainer}>
             <Text style={[styles.bottomLeft, { 
               color: dark? COLORS.white : COLORS.black
-            }]}>Don't have an account ?</Text>
+            }]}>{t.doYouHaveAnAccount}</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("Signup")}>
-              <Text style={styles.bottomRight}>{"  "}Sign Up</Text>
+              <Text style={styles.bottomRight}>{"  "}{t.signUp}</Text>
             </TouchableOpacity>
           </View>
             </View>

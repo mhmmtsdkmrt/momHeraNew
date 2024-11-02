@@ -9,6 +9,7 @@ import { requirementKeywords, requirements } from '../data';
 import { useNavigation } from '@react-navigation/native';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { useSelected } from '../utils/SelectedContext';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 
@@ -18,6 +19,7 @@ const requirementsRoute = () => {
   const [expanded, setExpanded] = useState(-1);
   const [searchText, setSearchText] = useState('');
   const { isSelected, handleCheckboxChange } = useSelected();
+  const { t } = useTranslation();
 
 
   const handleKeywordPress = (id) => {
@@ -112,7 +114,7 @@ return (
                           : COLORS.grayscale400,
                   },
               ]}
-              placeholder="Search"
+              placeholder={t.search}
               placeholderTextColor={
                   dark ? COLORS.greyscale600 : COLORS.grayscale400
               }
@@ -226,11 +228,12 @@ const RequirementListScreen = ({ navigation }) => {
 
   const layout = useWindowDimensions();
   const { dark, colors } = useTheme(); 
+  const { t } = useTranslation();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-      { key: 'first', title: 'Suggested' },
-      { key: 'second', title: 'My List' },
+      { key: 'first', title: `${t.suggested}` },
+      { key: 'second', title: `${t.myList}` },
   ]);
 
   const renderTabBar = (props) => (
@@ -275,7 +278,7 @@ const RequirementListScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Requirement List
+            {t.requirementList}
           </Text>
         </View>
       </View>

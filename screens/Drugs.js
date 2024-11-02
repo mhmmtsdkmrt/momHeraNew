@@ -11,6 +11,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { EvilIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Feather } from "@expo/vector-icons";
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const initialState = {
   inputValues: {
@@ -29,6 +30,7 @@ const initialState = {
 
 const Drugs = ({ navigation }) => {
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
   const [myDrugs, setMyDrugs] = useState([
     {date: '2024-05-01', drugName: 'Majezik', daily: 3, times: 1, usage: 'Aç', remind: true},
     {date: '2024-04-01', drugName: 'Arvales', daily: 3, times: 5, usage: 'Tok', remind: false},
@@ -49,8 +51,8 @@ const Drugs = ({ navigation }) => {
   };
 
   const hungerFastingOptions = [
-    { label: 'Aç', value: 'Aç' },
-    { label: 'Tok', value: 'Tok' },
+    { label: `${t.hungry}`, value: 'Aç' },
+    { label: `${t.full}`, value: 'Tok' },
   ];
 
   const handleHungerFastingChange = (value) => {
@@ -75,15 +77,15 @@ const Drugs = ({ navigation }) => {
 
   const removeItem = (item) => {
     Alert.alert(
-      'Kayıt Silinecek',
-      'Kaydı silmek istediğinize emin misiniz?',
+      `${t.deleteRecord}`,
+      `${t.sureDelete}`,
       [
         {
-          text: 'Hayır',
+          text: `${t.cancel}`,
           onPress: () => {},
         },
         {
-          text: 'Evet',
+          text: `${t.yes}`,
           onPress: () => {
             const updatedDrugs = myDrugs.filter(drug => drug !== item);
             setMyDrugs(updatedDrugs);
@@ -137,7 +139,7 @@ const Drugs = ({ navigation }) => {
             !formState.inputValues.times ||
             !selectHungerFasting
         ) {
-            setError('Lütfen tüm alanları doldurunuz.');
+            setError(`${t.fillAllFields}`);
             return;
         }
 
@@ -175,7 +177,7 @@ const Drugs = ({ navigation }) => {
                           <Input 
                           id="drugName"
                           onInputChanged={inputChangedHandler}
-                          placeholder="İlaç İsmi"
+                          placeholder={t.drugName}
                           placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                           errorText={formState.inputValidities['drugName']}
                           keyboardType="default"
@@ -184,7 +186,7 @@ const Drugs = ({ navigation }) => {
                           <Input 
                           id="daily"
                           onInputChanged={inputChangedHandler}
-                          placeholder="Günde"
+                          placeholder={t.perDay}
                           placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                           errorText={formState.inputValidities['daily']}
                           keyboardType="numeric"
@@ -196,7 +198,7 @@ const Drugs = ({ navigation }) => {
                           <Input 
                           id="times"
                           onInputChanged={inputChangedHandler}
-                          placeholder="Adet"
+                          placeholder={t.piece}
                           placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
                           errorText={formState.inputValidities['times']}
                           keyboardType="numeric"
@@ -204,7 +206,7 @@ const Drugs = ({ navigation }) => {
                           />
                           </View>
                           <RNPickerSelect
-                          placeholder={{ label: "Kullanım", value: '' }}
+                          placeholder={{ label: `${t.usage}`, value: '' }}
                           items={hungerFastingOptions}
                           onValueChange={(value) => handleHungerFastingChange(value)}
                           value={selectHungerFasting}
@@ -242,7 +244,7 @@ const Drugs = ({ navigation }) => {
                           <View style={styles.rightContainer}>
                           <Text style={[styles.settingsName, {
                             color: dark ? COLORS.white : COLORS.greyscale900
-                            }]}>Hatırlat</Text>
+                            }]}>{t.remind}</Text>
                           <Switch
                           value={isRemind}
                           onValueChange={toggleReminder}
@@ -252,12 +254,12 @@ const Drugs = ({ navigation }) => {
                           style={styles.switch}
                           />
                           </View>
-                          <Text style={styles.modalSubtitle}>Kullanacağınız ilaç bilgilerini kaydederek takibini yapabilirsiniz. İsterseniz hatırlatma seçeneği ile de sana hatırlatma yapabiliriz.</Text>
+                          <Text style={styles.modalSubtitle}>{t.drugRemindOption}</Text>
                           <View style={{flexDirection: 'row-reverse'}}>
 
 
                           <Button
-                              title="Ekle"
+                              title={t.add}
                               filled
                               onPress={() => { 
                                   setModalVisible(false)
@@ -271,7 +273,7 @@ const Drugs = ({ navigation }) => {
                               }}
                           />
                            <Button
-                              title="Vazgeç"
+                              title={t.cancel}
                               outlined
                               onPress={() => {
                                   setModalVisible(false)
@@ -310,7 +312,7 @@ const Drugs = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Drugs
+            {t.drugs}
           </Text>
         </View>
         <View style={styles.headerRight}>
@@ -323,7 +325,7 @@ const Drugs = ({ navigation }) => {
                 tintColor: dark? COLORS.secondaryWhite : COLORS.white
               }]}
             />
-            <Text style={{fontSize: 17, color: 'white'}}>  Ekle</Text>
+            <Text style={{fontSize: 17, color: 'white'}}>  {t.add}</Text>
           </TouchableOpacity>
           {renderModal()}
         </View>
@@ -351,14 +353,14 @@ const Drugs = ({ navigation }) => {
                             </View>
                             <View style={{flexDirection: 'row', marginTop: 3, justifyContent: 'space-between'}}> 
                               <View style={{flexDirection: 'row'}}>
-                              <Text style={styles.drugInfo}>Kullanım: {item.usage}</Text>
+                              <Text style={styles.drugInfo}>{t.usage} {item.usage}</Text>
                               <Text style={styles.drugInfo}>{item.daily}x{item.times} </Text>
                               {/* <Text style={styles.drugDate}>{item.date}</Text> */}
                               </View>
                             </View> 
                               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <View style={{flexDirection: 'row'}}>
-                                <Text style={[styles.drugInfo, { marginTop: 13}]}>Hatırlat</Text>
+                                <Text style={[styles.drugInfo, { marginTop: 13}]}>{t.remind}</Text>
                                 <Switch
                                 value={item.remind}
                                 onValueChange={(value) => {
@@ -386,7 +388,7 @@ const Drugs = ({ navigation }) => {
                           </TouchableOpacity>
 
     </View>
-    <Button title= "Ekle" onPress={() => setModalVisible(true)} filled />
+    <Button title= {t.add} onPress={() => setModalVisible(true)} filled />
 </View>
 </SafeAreaView>
   );

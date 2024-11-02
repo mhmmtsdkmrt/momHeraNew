@@ -13,6 +13,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import RNPickerSelect from 'react-native-picker-select';
 import { apiProfile } from '../apiConnections/ProfilesApi';
 import { getToken } from '../apiConnections/RegisterApi';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 const isTestMode = false
@@ -45,6 +46,7 @@ const initialState = {
   const [selectedAge, setSelectedAge] = useState('');
   const [selectedRelative, setSelectedRelative] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t } = useTranslation();
 
 
 
@@ -57,8 +59,8 @@ const initialState = {
   )
 
   const pregnantOptions = [
-    { label: 'Yes', value: '1' },
-    { label: 'Not Yet', value: '0' },
+    { label: `${t.yes}`, value: '1' },
+    { label: `${t.notYet}`, value: '0' },
   ];
 
     const handlePregnantChange = (value) => {
@@ -123,17 +125,17 @@ const initialState = {
 const userBirthDate = getUserBirthDate(selectedAge);
 
 
-  const relativeOptions = [
-    { label: 'Mother', value: 1 },
-    { label: 'Father', value: 2 },
-    { label: 'Parent', value: 3 },
-    { label: 'Single Mother', value: 4 },
-    { label: 'Grandma', value: 5 },
-    { label: 'Grandfather', value: 6 },
-    { label: 'Uncle or Aunt', value: 7 },
-    { label: 'Friend', value: 8 },
-    { label: 'Other', value: 9 },
-  ];
+const relativeOptions = [
+  { label: `${t.mother}`, value: 1 },
+  { label: `${t.father}`, value: 2 },
+  { label: `${t.parent}`, value: 3 },
+  { label: `${t.singleMother}`, value: 4 },
+  { label: `${t.grandMa}`, value: 5 },
+  { label: `${t.grandFather}`, value: 6 },
+  { label: `${t.uncleOrAunt}`, value: 7 },
+  { label: `${t.friend}`, value: 8 },
+  { label: `${t.other}`, value: 9 },
+];
 
   const handleRelativeChange = (value) => {
     setSelectedRelative(value);
@@ -141,7 +143,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occured', error)
+      Alert.alert(`${t.anErrorOccured}`, error)
     }
   }, [error])
 
@@ -159,14 +161,14 @@ const userBirthDate = getUserBirthDate(selectedAge);
 
   const handleSubmit = async () => {
     if (!formState.formIsValid) {
-      Alert.alert('Error', 'Please fill all the fields correctly.');
+      Alert.alert(`${t.anErrorOccured}`, `${t.pleaseCheckInput}`);
       return;
     }
 
     const token = await getToken();
 
     if (!token) {
-      Alert.alert ('Hata', 'Token bulunamadı.');
+      Alert.alert(`${t.anErrorOccured}`, `${t.tokenNotFound}`);
       return;
     }
 
@@ -187,12 +189,12 @@ const userBirthDate = getUserBirthDate(selectedAge);
     
     try {
       const response = await apiProfile(data, token); 
-      Alert.alert('Success', 'Profile created successfully!');
+      Alert.alert(`${t.success}`, `${t.successfullyUpdate}`);
       console.log('Response:', response);
       // Burada başka bir sayfaya yönlendirme
       navigation.navigate("PregnancyInfo");
     } catch (error) {
-      Alert.alert('Error', 'An error occurred while creating the profile.');
+      Alert.alert(`${t.anErrorOccured}`, `${t.notCreatingProfile}`);
       console.error('There was an error!', error);
     } finally {
       setIsSubmitting(false);
@@ -203,7 +205,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Header title="Fill Your Profile" />
+        <Header title={t.fillYourProfile} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ alignItems: "center", marginVertical: 12 }}>
             <View style={styles.avatarContainer}>
@@ -226,19 +228,19 @@ const userBirthDate = getUserBirthDate(selectedAge);
               id="fullName"
               onInputChanged={inputChangedHandler}
               errorText={formState.inputValidities['fullName']}
-              placeholder="Full Name"
+              placeholder={t.name}
               placeholderTextColor={COLORS.gray} />
               <Input
               id="lastName"
               onInputChanged={inputChangedHandler}
               errorText={formState.inputValidities['lastName']}
-              placeholder="Last Name"
+              placeholder={t.lastName}
               placeholderTextColor={COLORS.gray} />
             <Input
               id="nickname"
               onInputChanged={inputChangedHandler}
               errorText={formState.inputValidities['nickname']}
-              placeholder="Nickname"
+              placeholder={t.nickName}
               placeholderTextColor={COLORS.gray} />
             <Input
               id="email"
@@ -251,7 +253,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
             <View style={styles.pickerContainer}>
               {/* yaş seçimi */}
             <RNPickerSelect
-                placeholder={{ label: "You're age?", value: '' }}
+                placeholder={{ label: `${t.yourAge}`, value: '' }}
                 items={ageOptions}
                 onValueChange={(value) => handleAgeChange(value)}
                 value={selectedAge}
@@ -286,7 +288,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
               />
               {/* Hamilelik seçimi */}
               <RNPickerSelect
-                placeholder={{ label: "You're pregnant?" , value: '' }}
+                placeholder={{ label: `${t.yourPregnant}` , value: '' }}
                 items={pregnantOptions}
                 onValueChange={(value) => handlePregnantChange(value)}
                 value={selectedPregnant}
@@ -321,7 +323,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
               />
               {/* ilişki seçimi */}
             <RNPickerSelect
-                placeholder={{ label: "You're relative?", value: '' }}
+                placeholder={{ label: `${t.yourRelative}`, value: '' }}
                 items={relativeOptions}
                 onValueChange={(value) => handleRelativeChange(value)}
                 value={selectedRelative}
@@ -358,7 +360,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
           </View>
           <View style={styles.bottomContainer}>
         <Button
-          title="Skip"
+          title={t.skip}
           style={{
             width: (SIZES.width - 32) / 2 - 8,
             borderRadius: 32,
@@ -369,7 +371,7 @@ const userBirthDate = getUserBirthDate(selectedAge);
           onPress={() => navigation.navigate("PregnancyInfo")}
         />
         <Button
-          title={isSubmitting ? "Submitting..." : "Continue"}
+          title={isSubmitting ? `${t.submitting}` : `${t.continue}`}
           filled
           style={styles.continueButton}
           onPress={handleSubmit}

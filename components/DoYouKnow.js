@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { COLORS, SIZES } from '../constants';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 export default function DoYouKnow() {
+
+  const {t} = useTranslation();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.textHeader}>Biliyor muydunuz?</Text>
+      <Text style={styles.textHeader}>{t.doYouKnow}</Text>
       <Text style={styles.text}>Küçük Bilgiler. tıklandığında ilgili bilginin tamamına ulaşacak.</Text>
     </View>
   );

@@ -25,7 +25,6 @@ import Home from "./Home";
 import Explore from "./Explore";
 import Inbox from "./Inbox";
 import Profile from "./Profile";
-import Call from "./Call";
 import Chat from "./Chat";
 import Notifications from "./Notifications";
 import MyBookmark from "./MyBookmark";
@@ -51,6 +50,8 @@ import WeeklyPeriodDetailScreen from "./WeeklyPeriodDetailScreen";
 import ArticlesCatagoriesScreen from "./ArticlesCatagoriesScreen";
 import HoroscopeScreen from "./HoroscopeScreen";
 import HoroscopeDetailScreen from "./HoroscopeDetailScreen";
+import OnlineNotifications from "@/utils/notifications/OnlineNotifications"
+
 
 export {
     Onboarding1,
@@ -79,7 +80,6 @@ export {
     Explore,
     Inbox,
     Profile,
-    Call,
     Chat,
     Notifications,
     MyBookmark,
@@ -106,4 +106,5 @@ export {
     ArticlesCatagoriesScreen,
     HoroscopeScreen,
     HoroscopeDetailScreen,
+    OnlineNotifications,
 }

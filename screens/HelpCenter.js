@@ -8,12 +8,14 @@ import { faqKeywords, faqs } from '../data';
 import { useTheme } from '../theme/ThemeProvider';
 import { ScrollView } from 'react-native-virtualized-view';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const faqsRoute = () => {
     const [selectedKeywords, setSelectedKeywords] = useState([]);
     const [expanded, setExpanded] = useState(-1);
     const [searchText, setSearchText] = useState('');
     const { dark, colors } = useTheme(); 
+    const { t } = useTranslation();
 
     const handleKeywordPress = (id) => {
         setSelectedKeywords((prevSelectedKeywords) => {
@@ -107,7 +109,7 @@ const faqsRoute = () => {
                                 : COLORS.grayscale400,
                         },
                     ]}
-                    placeholder="Search"
+                    placeholder={t.search}
                     placeholderTextColor={
                         dark ? COLORS.greyscale600 : COLORS.grayscale400
                     }
@@ -167,18 +169,19 @@ const faqsRoute = () => {
 const contactUsRoute = () => {
     const navigation = useNavigation();
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <View style={[styles.routeContainer, { 
             backgroundColor: dark ? COLORS.dark1 : COLORS.tertiaryWhite }]}>
             <HelpCenterItem
                 icon={icons.headset}
-                title="Customer Service"
+                title={t.userService}
                 onPress={() => navigation.navigate("CustomerService")}
             />
             <HelpCenterItem
                 icon={icons.suggest}
-                title="Make a suggestion"
+                title={t.makeASuggestion}
                 onPress={() => Linking.openURL('mailto:mhmmtsdkmrt@gmail.com?subject=subject&body=I would like to make a suggestion')}
             />
             {/* <HelpCenterItem
@@ -188,7 +191,7 @@ const contactUsRoute = () => {
             /> */}
             <HelpCenterItem
                 icon={icons.world}
-                title="Website"
+                title={t.webSite}
                 onPress={() => Linking.openURL('https://momhera.com/')}
             />
             {/* <HelpCenterItem
@@ -217,11 +220,12 @@ const renderScene = SceneMap({
 const HelpCenter = ({ navigation }) => {
     const layout = useWindowDimensions();
     const { dark, colors } = useTheme(); 
+    const { t } = useTranslation();
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'first', title: 'FAQ' },
-        { key: 'second', title: 'Contact Us' },
+        { key: 'first', title: `${t.FAQ}` },
+        { key: 'second', title: `${t.contactUs}` },
     ]);
 
     const renderTabBar = (props) => (
@@ -262,7 +266,7 @@ const HelpCenter = ({ navigation }) => {
                     </TouchableOpacity>
                     <Text style={[styles.headerTitle, { 
                         color: dark? COLORS.white : COLORS.greyscale900
-                    }]}>Help Center</Text>
+                    }]}>{t.helpCenter}</Text>
                 </View>
                 <TouchableOpacity>
                     <Image

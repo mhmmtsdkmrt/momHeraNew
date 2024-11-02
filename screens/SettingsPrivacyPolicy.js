@@ -5,15 +5,17 @@ import { COLORS } from '../constants';
 import Header from '../components/Header';
 import { ScrollView } from 'react-native-virtualized-view';
 import { useTheme } from '../theme/ThemeProvider';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const SettingsPrivacyPolicy = () => {
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     // change the privacy policy
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Header title="Privacy Policy"/>
+            <Header title={t.privacyPolicy}/>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View>
                     <Text style={[styles.settingsTitle, { color: dark ? COLORS.white : COLORS.black }]}>1. Types of Data We Collect</Text>

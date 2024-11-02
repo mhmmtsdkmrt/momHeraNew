@@ -14,6 +14,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { apiProfileGet, apiProfilePut } from '../apiConnections/ProfilesApi';
 import { getToken } from '../apiConnections/RegisterApi';
 import { ProfileContext } from '../Contexts/ProfileGetApi';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 const isTestMode = false
@@ -49,6 +50,7 @@ const EditProfile = ({ navigation }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { profileData, setProfileData } = useContext(ProfileContext);
+  const { t } = useTranslation();
 
 
   const inputChangedHandler = useCallback(
@@ -60,8 +62,8 @@ const EditProfile = ({ navigation }) => {
   )
 
   const pregnantOptions = [
-    { label: 'Yes', value: '1' },
-    { label: 'Not Yet', value: '0' },
+    { label: `${t.yes}`, value: '1' },
+    { label: `${t.notYet}`, value: '0' },
   ];
 
     const handlePregnantChange = (value) => {
@@ -129,7 +131,7 @@ const EditProfile = ({ navigation }) => {
     const fetchProfileData = async () => {
       const token = await getToken();
       if (!token) {
-        Alert.alert('Hata', 'Token bulunamadı!');
+        Alert.alert(`${t.anErrorOccured}`, `${t.tokenNotFound}`);
         return;
       }
 
@@ -137,13 +139,13 @@ const EditProfile = ({ navigation }) => {
       try {
         const existingData = await apiProfileGet(userId, token);
         if (!existingData) {
-          Alert.alert('Hata', 'Mevcut veriler çekilemedi.');
+          Alert.alert(`${t.anErrorOccured}`, `${t.notPullData}`);
           return;
         }
 
         setProfileData(existingData);
       } catch (err) {
-        Alert.alert('Hata', 'Profil verileri alınırken bir hata oluştu.');
+        Alert.alert(`${t.anErrorOccured}`, `${t.notPullingProfileData}`);
         console.error(err);
       }
     };
@@ -202,15 +204,15 @@ const EditProfile = ({ navigation }) => {
 
 
   const relativeOptions = [
-    { label: 'Mother', value: 1 },
-    { label: 'Father', value: 2 },
-    { label: 'Parent', value: 3 },
-    { label: 'Single Mother', value: 4 },
-    { label: 'Grandma', value: 5 },
-    { label: 'Grandfather', value: 6 },
-    { label: 'Uncle or Aunt', value: 7 },
-    { label: 'Friend', value: 8 },
-    { label: 'Other', value: 9 },
+    { label: `${t.mother}`, value: 1 },
+    { label: `${t.father}`, value: 2 },
+    { label: `${t.parent}`, value: 3 },
+    { label: `${t.singleMother}`, value: 4 },
+    { label: `${t.grandMa}`, value: 5 },
+    { label: `${t.grandFather}`, value: 6 },
+    { label: `${t.uncleOrAunt}`, value: 7 },
+    { label: `${t.friend}`, value: 8 },
+    { label: `${t.other}`, value: 9 },
   ];
 
   const handleRelativeChange = (value) => {
@@ -219,7 +221,7 @@ const EditProfile = ({ navigation }) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occured', error)
+      Alert.alert(`${t.anErrorOccured}`, error)
     }
   }, [error])
 
@@ -242,7 +244,7 @@ const EditProfile = ({ navigation }) => {
         const token = await getToken();
 
       if(!token) {
-        Alert.alert('Hata', 'Token Bulunamadı.');
+        Alert.alert(`${t.anErrorOccured}`, `${t.tokenNotFound}`);
         return;
       }
 
@@ -255,7 +257,7 @@ const EditProfile = ({ navigation }) => {
 
 
       if (!existingData) {
-          Alert.alert('Hata', 'Mevcut veriler çekilemedi.');
+          Alert.alert(`${t.anErrorOccured}`, `${t.notPullData}`);
           return;
       }
 
@@ -283,13 +285,13 @@ const EditProfile = ({ navigation }) => {
     
       try {
         const response = await apiProfilePut(data); 
-        Alert.alert('Success', 'Gebelik bilgileri başarıyla güncellendi!');
+        Alert.alert(`${t.success}`, `${t.successfullyUpdate}`);
         console.log('Response:', response);
         // Burada başka bir sayfaya yönlendirme
         navigation.navigate("Profile");
       } catch (error) {
-        Alert.alert('Error', 'An error occurred while creating the profile.');
-        console.error('There was an error!', error);
+        Alert.alert(`${t.anErrorOccured}`, `${t.notCreatingProfile}`);
+        console.error(`${t.anErrorOccured}`, error);
       } finally {
         setIsSubmitting(false);
       }
@@ -299,7 +301,7 @@ const EditProfile = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: dark ? COLORS.dark1 : COLORS.white }]}>
       <View style={[styles.container, { backgroundColor: dark ? COLORS.dark1 : COLORS.white }]}>
-        <Header title="Edit Profile" />
+        <Header title={t.editProfile} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ alignItems: "center", marginVertical: 12 }}>
             <View style={styles.avatarContainer}>
@@ -368,7 +370,7 @@ const EditProfile = ({ navigation }) => {
             <View style={styles.pickerContainer}>
               {/* yaş seçimi */}
             <RNPickerSelect
-                placeholder={{ label: "You're age?", value: '' }}
+                placeholder={{ label: `${t.yourAge}`, value: '' }}
                 items={ageOptions}
                 onValueChange={(value) => handleAgeChange(value)}
                 value={selectedAge}
@@ -403,7 +405,7 @@ const EditProfile = ({ navigation }) => {
               />
               {/* Hamilelik seçimi */}
               <RNPickerSelect
-                placeholder={{ label: "You're pregnant?" , value: '' }}
+                placeholder={{ label: `${t.yourPregnancy}` , value: '' }}
                 items={pregnantOptions}
                 onValueChange={(value) => handlePregnantChange(value)}
                 value={selectedPregnant}
@@ -438,7 +440,7 @@ const EditProfile = ({ navigation }) => {
               />
               {/* ilişki seçimi */}
             <RNPickerSelect
-                placeholder={{ label: "You're relative?", value: '' }}
+                placeholder={{ label: `${t.yourRelative}`, value: '' }}
                 items={relativeOptions}
                 onValueChange={(value) => handleRelativeChange(value)}
                 value={selectedRelative}
@@ -477,7 +479,7 @@ const EditProfile = ({ navigation }) => {
       </View>
       <View style={styles.bottomContainer}>
       <Button
-          title={isSubmitting ? "Updating..." : "Update"}
+          title={isSubmitting ? `${t.updating}` : `${t.update}`}
           filled
           style={styles.continueButton}
           onPress={handleSubmit}

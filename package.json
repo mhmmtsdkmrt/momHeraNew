@@ -36,13 +36,16 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
+    "html-to-text": "^9.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-linear-gradient-button": "^1.1.1",
     "react-native": "0.74.5",
     "react-native-calendars": "^1.1306.0",
     "react-native-date-picker": "^5.0.7",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-gifted-chat": "^2.6.2",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "^1.14.0",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-number-please": "^1.0.5",
@@ -57,7 +60,8 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-virtualized-view": "^1.0.0",
     "react-native-web": "~0.19.10",
-    "validate.js": "^0.13.1"
+    "validate.js": "^0.13.1",
+    "expo-notifications": "~0.28.19"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

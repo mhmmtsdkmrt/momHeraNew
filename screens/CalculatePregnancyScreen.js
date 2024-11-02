@@ -11,11 +11,13 @@ import RadioButtonGroup from '../components/RadioButtonGroup';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { pregnancyData } from '@/data';
 import Button from '@/components/Button';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 
 const CalculatePregnancyScreen = ({ navigation }) => {
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
 
   const [startedDate, setStartedDate] = useState("Select Date");
   const [selectedBasedOn, setSelectedBasedOn] = useState('');
@@ -42,11 +44,11 @@ const CalculatePregnancyScreen = ({ navigation }) => {
 
 
   const basedOnDateOptions = [
-      { label: 'Doğum tarihimi biliyorum', value: 1 }, // I know pregnancy day
-      { label: 'Son regl tarihinin ilk günü', value: 2 }, // Last period
-      { label: 'Tahmini gebe kalma tarihi', value: 3 }, // estimate conception date
-      { label: 'Tüp bebek transferi', value: 4 }, // IVF
-      { label: 'Ultrason', value: 5 },
+      { label: `${t.knowPregnancyDay}`, value: 1 }, // I know pregnancy day
+      { label: `${t.lastPeriod}` , value: 2 }, // Last period
+      { label: `${t.estimateConception}`, value: 3 }, // estimate conception date
+      { label: `${t.IVF}`, value: 4 }, // IVF
+      { label: `${t.ultrason}`, value: 5 },
     ];
 
 
@@ -177,11 +179,11 @@ const CalculatePregnancyScreen = ({ navigation }) => {
         const currentWeek = pregnancyDurationWeeks - weeksRemaining;
         setCurrentWeek(currentWeek);
             if (currentWeek <= 13) {
-            setCurrentTrimester('1. Trimester');
+            setCurrentTrimester(`${t.firstTrimester}`);
             } else if (currentWeek <= 27) {
-            setCurrentTrimester('2. Trimester');
+            setCurrentTrimester(`${t.secondTrimester}`);
             } else {
-            setCurrentTrimester('3. Trimester');
+            setCurrentTrimester(`${t.thirdTrimester}`);
             }
             
             
@@ -228,7 +230,7 @@ const CalculatePregnancyScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Calculate Pregnancy
+            {t.calculatePregnancy}
           </Text>
         </View>
       </View>
@@ -246,11 +248,11 @@ const CalculatePregnancyScreen = ({ navigation }) => {
             <View style={{ marginTop: 0}}>
                     <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Doğum tarihinizi hesaplayın. </Text>
+                    }]}>{t.calculateYourDate} </Text>
 
 
                         <RNPickerSelect
-                            placeholder={{ label: "Based On?", value: '' }}
+                            placeholder={{ label: `${t.basedOn}`, value: '' }}
                             items={basedOnDateOptions}
                             onValueChange={(value) => handleBasedOnChange(value)}
                             value={selectedBasedOn}
@@ -313,8 +315,8 @@ const CalculatePregnancyScreen = ({ navigation }) => {
                         {selectedBasedOn === 4 && (
                               <RadioButtonGroup
                                   options={[
-                                    { label: '3 Günlük', value: 3 },
-                                    { label: '5 Günlük', value: 5 },
+                                    { label: `${t.treeDays}`, value: 3 },
+                                    { label: `${t.fiveDays}`, value: 5 },
                                     ]}
                                       selectedValue={embryoAge}
                                       onValueChange={setEmbryoAge}
@@ -325,13 +327,13 @@ const CalculatePregnancyScreen = ({ navigation }) => {
                       <>
                       <View style={styles.ultrasoundContainer}>
                         <Dropdown
-                          label="Hafta"
+                          label={t.week}
                           options={[...Array(40).keys()].map((i) => ({ label: `${i}`, value: i }))}
                           selectedValue={ultrasoundWeek}
                           onValueChange={setUltrasoundWeek}
                         />
                         <Dropdown
-                          label="Gün"
+                          label={t.day}
                           options={[...Array(7).keys()].map((i) => ({ label: `${i}`, value: i }))}
                           selectedValue={ultrasoundDay}
                           onValueChange={setUltrasoundDay}
@@ -340,51 +342,52 @@ const CalculatePregnancyScreen = ({ navigation }) => {
                       </>
                     )}
 
-                        {selectedBasedOn === 1 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>Gebelik zaman çizelgenizi görmek için bu gebelik hesaplayıcısını kullanabilirsiniz.</Text>}
-                        {selectedBasedOn === 2 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>Gebelik, son adet tarihinin ilk gününden itibaren hesaplanır. Bu yöntem, 28 günlük düzenli bir adet döngüsüne sahip olan kadınlar için uygundur. Son adet tarihinin ilk gününe 280 gün (40 hafta) eklenerek tahmini doğum tarihi bulunur.</Text>}
-                        {selectedBasedOn === 3 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>Tam olarak ne zaman gebe kaldığınızı biliyorsanız - örneğin, bir yumurtlama tahmin kiti kullanıyorsanız  veya yumurtlama semptomlarınızı takip ediyorsanız - gebe kalma tarihinizi gebe kalma tarihinize göre hesaplayabilirsiniz. </Text>}
-                        {selectedBasedOn === 4 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>Transfer tarihine embriyonun yaşı eklenir ve gebelik süresi bu şekilde belirlenir.</Text>}
-                        {selectedBasedOn === 5 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>Gebeliğin erken dönemlerinde yapılan ultrasonografi, bebeğin baş-popo mesafesi (CRL) ölçülerek gebelik yaşı belirlenir. Bu yöntem, adet düzensizlikleri olan veya son adet tarihini hatırlamayan kadınlar için daha doğru sonuçlar verebilir.</Text>}
+                        {selectedBasedOn === 1 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{t.knowPregnancyDayTitle}</Text>}
+                        {selectedBasedOn === 2 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{t.lastPeriodTitle}</Text>}
+                        {selectedBasedOn === 3 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{t.estimateConceptionTitle}</Text>}
+                        {selectedBasedOn === 4 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{t.IVFTitle}</Text>}
+                        {selectedBasedOn === 5 && <Text style={[styles.subtitle, { color: dark? COLORS.secondaryWhite : COLORS.greyscale900 }]}>{t.ultrasonTitle}</Text>}
     
             <View style={{marginTop: 25}}>
             {showWarning ? (
-            <Button title="Bilgileri giriniz !" filled /> ) :  <Button title="Hesapla" onPress={handlePress} filled />
+            <Button title={t.enterInfo} filled /> ) :  <Button title={t.calculate} onPress={handlePress} filled />
             }
             </View>
+
 
 
            {showResults && (           
             <><View style={styles.subResultBox}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Tahmini Doğum Tarihi :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.estimatedBirthDate} :</Text>
                   <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{dueDate.toLocaleDateString()} </Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Doğuma Kalan Gün :</Text>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{(remainingWeeks * 7) + remainingDays} Gün </Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.daysToBirth} :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{(remainingWeeks * 7) + remainingDays} {t.day} </Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Gebelik Haftası :</Text>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{currentWeek}. Hafta </Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.pregnantalWeek} :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{currentWeek}. {t.week}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Gebelik Gün Sayısı :</Text>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{(elapsedWeeks * 7) + elapsedDays} Gün</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.remainingInPregnancy} :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{(elapsedWeeks * 7) + elapsedDays} {t.day}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Trimester Dönemi :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.trimesterPeriod} :</Text>
                   <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{currentTrimester}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Bebeğin Kilosu : </Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.babysWeight} :</Text>
                   <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>≈{data.weight}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.2, borderBottomColor: COLORS.grayscale400, margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Bebeğin Uzunluğu :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.babysLenght} :</Text>
                   <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>≈{data.size}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 5 }}>
-                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>Bebeğin Büyüklüğü :</Text>
+                  <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.babysSize} :</Text>
                   <Text style={[styles.resultText, { color: dark ? COLORS.white : COLORS.primary }]}>{data.title}</Text>
                 </View>
 

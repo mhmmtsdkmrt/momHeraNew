@@ -4,12 +4,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, icons } from '../constants';
 import { useTheme } from '@react-navigation/native';
 import { boyNamesSeries, boyNamesSeriesDetail } from '../data';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 export default function BoyNamesListScreen() {
     const { dark, colors } = useTheme(); 
     const [searchText, setSearchText] = useState('');
     const [selectedKeywords, setSelectedKeywords] = useState([]);
     const [expanded, setExpanded] = useState(-1);
+    const { t } = useTranslation();
 
 
     const handleKeywordPress = (id) => {
@@ -76,7 +78,7 @@ export default function BoyNamesListScreen() {
                     </TouchableOpacity>
                         <Text style={[styles.headerTitle, { 
                             color: dark? COLORS.white : COLORS.greyscale900
-                            }]}>Boy Names</Text>
+                            }]}>{t.babyBoyNames}</Text>
                 </View>
                 
                 </View>

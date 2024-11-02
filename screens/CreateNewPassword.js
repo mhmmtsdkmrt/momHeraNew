@@ -24,6 +24,11 @@ const initialState = {
   formIsValid: false,
 }
 
+//** DİL EKLENECEK */
+//** DİL EKLENECEK */
+//** DİL EKLENECEK */
+//** DİL EKLENECEK */
+//** DİL EKLENECEK */
 
 const CreateNewPassword = ({ navigation }) => {
   const [formState, dispatchFormState] = useReducer(reducer, initialState);

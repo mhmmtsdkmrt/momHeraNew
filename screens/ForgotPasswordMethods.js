@@ -6,6 +6,14 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import { useTheme } from '../theme/ThemeProvider';
 
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+
+
 const ForgotPasswordMethods = ({ navigation }) => {
   const [selectedMethod, setSelectedMethod] = useState('sms');
   const { colors, dark } = useTheme();

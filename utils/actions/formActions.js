@@ -1,3 +1,4 @@
+
 import {
     validateString,
     validateEmail,
@@ -8,6 +9,7 @@ import {
 } from '../ValidationConstraints'
 
 export const validateInput = (inputId, inputValue) => {
+
     if (
         inputId === 'fullName' ||
         inputId === 'location' ||

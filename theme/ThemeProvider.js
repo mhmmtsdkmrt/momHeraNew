@@ -30,3 +30,4 @@ export const ThemeProvider = (props) => {
 }
 
 export const useTheme = () => useContext(ThemeContext)
+

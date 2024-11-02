@@ -6,6 +6,16 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons"
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import { useTheme } from '../theme/ThemeProvider'
 
+
+//** KONTROL EDİLECEK */
+//** KONTROL EDİLECEK */
+//** KONTROL EDİLECEK */
+//** KONTROL EDİLECEK */
+//** KONTROL EDİLECEK */
+//** KONTROL EDİLECEK */
+//** KONTROL EDİLECEK */
+
+
 const CustomerService = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');

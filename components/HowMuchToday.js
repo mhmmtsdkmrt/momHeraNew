@@ -4,6 +4,7 @@ import { COLORS, SIZES } from '../constants';
 import { ProfileContext } from '../Contexts/ProfileGetApi';
 import { useNavigation } from '@react-navigation/native';
 import { pregnancyData } from '../data';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 export default function HowMuchToday () {
@@ -11,6 +12,7 @@ export default function HowMuchToday () {
         const navigation = useNavigation();
 
         const {currentWeek} = useContext(ProfileContext);
+        const {t} = useTranslation();
 
         const data = pregnancyData[currentWeek];
 
@@ -20,7 +22,7 @@ export default function HowMuchToday () {
         <Image 
         style={styles.image}
         source={data.image}/>
-        {currentWeek < 4 ? <Text style={styles.text}>{data.title}</Text> :  <Text style={styles.text}>Bebeğinizin boyutu {data.title} büyüklüğünde</Text>}
+        {currentWeek < 4 ? <Text style={styles.text}>{data.title}</Text> :  <Text style={styles.text}> {t.sizeOfYourBaby} {data.title}</Text>}
 
     </View>
   );

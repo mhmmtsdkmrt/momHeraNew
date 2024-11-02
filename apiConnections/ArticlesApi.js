@@ -1,10 +1,12 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
+import { TranslationsContext } from '@/Contexts/LanguageContext';
 
 
 const ArticlesApi = () => {
 
     const [data, setData] = useState([]);
+    const { language } = useContext(TranslationsContext);
 
          useEffect(() => {
             const fetchData = async() => {
@@ -13,7 +15,7 @@ const ArticlesApi = () => {
                     method: 'get',
                     url: "https://api.momhera.com/api/Categories",
                     params: {
-                        Language : 'tr',
+                        Language : language,
                         PageIndex : 0,
                         PageSize: 100,
                     }, 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ImageBackground, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -6,15 +6,19 @@ import { COLORS, SIZES } from '../constants';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { ProfileContext } from '../Contexts/ProfileGetApi';
 import { pregnancyData } from '../data';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 export default function BabySizeWeight() {
     const { colors, dark } = useTheme();
     const navigation = useNavigation();
-    
-   const {currentWeek} = useContext(ProfileContext);
+
+
+    const {t} = useTranslation(); 
+    const {currentWeek} = useContext(ProfileContext);
 
     const data = pregnancyData[currentWeek];
+    const imageUri = {uri: 'https://momhera.com/Theme/dashboard/assets/dist/img/corner.png'};    
 
 
 
@@ -22,35 +26,84 @@ export default function BabySizeWeight() {
   return (
     <View style={{flexDirection: 'row', marginTop: 50}}>
     {/* Bebeğin Boyu */}
-    <View style={styles.container}>
+    <ImageBackground style={styles.container} borderRadius={11} resizeMode='cover' 
+        resizeMethod='resize' source={imageUri}>
+            <View style={{flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
         <View style={styles.icon}>
-        <Entypo name="ruler" size={24} color= {COLORS.primary} />
+        <Entypo name="ruler" size={24} color= '#f4c2c2' />
         </View>
         <View style={styles.titleContainer}>
             <View>
-            <Text style={styles.headerTitle}>Size</Text>
+            <Text style={styles.headerTitle}>{t.size}</Text>
             <View style={styles.countContainer}>
             <Text style={styles.weightTitle}>≈{data.size}</Text>
             <Text style={styles.rateTitle}>↑{data.sizeRate}</Text>
             </View>
             </View>
         </View>
-    </View>
-    {/* Bebeğin kilosu */}
-    <View style={styles.container}>
+        </View>
+        <View style={{flexDirection: 'row', marginLeft: 10}}> 
         <View style={styles.icon}>
-          <Ionicons name="scale-outline" size={24} color={COLORS.primary} />
+          <Ionicons name="scale-outline" size={24} color='#f4c2c2' />
           </View>
         <View style={styles.titleContainer}>
             <View>
-            <Text style={styles.headerTitle}>Weight</Text>
+            <Text style={styles.headerTitle}>{t.weight}</Text>
             <View style={styles.countContainer}>
             <Text style={styles.weightTitle}>≈{data.weight}</Text>
             <Text style={styles.rateTitle}>↑{data.weightRate}</Text>
             </View>
             </View>
         </View>
-    </View>
+        </View>
+        </View>
+    </ImageBackground>
+    {/* <View style={styles.container}>
+        <View style={styles.icon}>
+        <Entypo name="ruler" size={24} color= {COLORS.primary} />
+        </View>
+        <View style={styles.titleContainer}>
+            <View>
+            <Text style={styles.headerTitle}>{t.size}</Text>
+            <View style={styles.countContainer}>
+            <Text style={styles.weightTitle}>≈{data.size}</Text>
+            <Text style={styles.rateTitle}>↑{data.sizeRate}</Text>
+            </View>
+            </View>
+        </View>
+    </View> */}
+    {/* Bebeğin kilosu */}
+
+    {/* <ImageBackground style={styles.container}  resizeMode='cover' borderRadius={11}
+        resizeMethod='resize' source={imageUri}>
+        <View style={styles.icon}>
+          <Ionicons name="scale-outline" size={24} color='#f4c2c2' />
+          </View>
+        <View style={styles.titleContainer}>
+            <View>
+            <Text style={styles.headerTitle}>{t.weight}</Text>
+            <View style={styles.countContainer}>
+            <Text style={styles.weightTitle}>≈{data.weight}</Text>
+            <Text style={styles.rateTitle}>↑{data.weightRate}</Text>
+            </View>
+            </View>
+        </View>
+    </ImageBackground> */}
+    {/* <View style={styles.container}>
+        <View style={styles.icon}>
+          <Ionicons name="scale-outline" size={24} color={COLORS.primary} />
+          </View>
+        <View style={styles.titleContainer}>
+            <View>
+            <Text style={styles.headerTitle}>{t.weight}</Text>
+            <View style={styles.countContainer}>
+            <Text style={styles.weightTitle}>≈{data.weight}</Text>
+            <Text style={styles.rateTitle}>↑{data.weightRate}</Text>
+            </View>
+            </View>
+        </View>
+    </View> */}
     </View>
   );
 }
@@ -58,12 +111,14 @@ export default function BabySizeWeight() {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: (SIZES.width - 64)/2 ,
+        width: (SIZES.width - 20) ,
         height: 70,
-        marginTop: 120,
-        marginLeft: 10,
-        borderRadius: 20,
+        marginTop: 170,
+        marginLeft: 0,
+        borderRadius: 11,
         backgroundColor: 'white',
+        borderColor: '#f4c2c2',
+        borderWidth: 0.2,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -76,7 +131,8 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     icon: {
-        backgroundColor: COLORS.tansparentPrimary,
+        //backgroundColor: '#e7dfe4', 
+        //backgroundColor: COLORS.tansparentPrimary,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 30,
@@ -84,6 +140,9 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         margin: 10,
+        borderColor: '#f4c2c2',
+        borderWidth: 0.5,
+        //marginLeft: 20,
     },
     titleContainer: {
         flexDirection: 'column',

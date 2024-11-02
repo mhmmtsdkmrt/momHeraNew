@@ -3,11 +3,13 @@ import React from 'react'
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { COLORS, SIZES, images } from '../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 export default function BoyNames({image}) {
 
     const navigation = useNavigation();
     const { dark, colors } = useTheme();
+    const { t } = useTranslation();
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -22,7 +24,7 @@ export default function BoyNames({image}) {
         <View style={styles.rightContainer}>
             <Text style={[styles.name, { 
                 color: dark ? COLORS.white : COLORS.black,
-            }]}>Erkek Bebek İsimleri</Text>
+            }]}>{t.babyBoyNames}</Text>
             {/* <Text style={[styles.description, { 
                 color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
             }]}>{description}</Text> */}
@@ -39,7 +41,7 @@ export default function BoyNames({image}) {
         <View style={styles.rightContainer}>
             <Text style={[styles.name, { 
                 color: dark ? COLORS.white : COLORS.black,
-            }]}> Modern Erkek Bebek İsimleri</Text>
+            }]}>{t.modernBabyBoyNames}</Text>
             {/* <Text style={[styles.description, { 
                 color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
             }]}>{description}</Text> */}
@@ -56,7 +58,7 @@ export default function BoyNames({image}) {
         <View style={styles.rightContainer}>
             <Text style={[styles.name, { 
                 color: dark ? COLORS.white : COLORS.black,
-            }]}>İkili Erkek Bebek İsimleri</Text>
+            }]}>{t.binaryBabyBoyNames}</Text>
             {/* <Text style={[styles.description, { 
                 color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
             }]}>{description}</Text> */}

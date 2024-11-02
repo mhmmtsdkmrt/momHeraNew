@@ -5,6 +5,7 @@ import { COLORS, FONTS, SIZES, icons } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { EvilIcons } from '@expo/vector-icons';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const ContractionsCounterScreen = ({ navigation }) => {
 
@@ -18,6 +19,7 @@ const ContractionsCounterScreen = ({ navigation }) => {
   const [averageCounter, setAverageCounter] = useState(0);
   const [averageDiff, setAverageDiff] = useState(0);
   const [deletedItem, setDeletedItem] = useState(null);
+  const { t } = useTranslation();
 
   const renderGroupedHistory = () => {
     const groupedHistory = {};
@@ -36,7 +38,6 @@ const ContractionsCounterScreen = ({ navigation }) => {
 
 
   useEffect(() => {
-    console.log("History:", history);
   }, [history]);
 
 
@@ -157,18 +158,18 @@ const ContractionsCounterScreen = ({ navigation }) => {
   const removeItem = (index) => {
 
     Alert.alert(
-      'Kayıt Silinecek',
-      'Kaydı silmek istediğinize emin misiniz?',
+      `${t.deleteRecord}`,
+      `${t.sureDelete}`,
       [
         {
-          text: 'Vazgeç',
+          text: `${t.cancel}` ,
           onPress: () => {
             // setHistory([...updatedHistory, deleted]);
             // setDeletedItem(null);
           },
         },
         {
-          text: 'Evet',
+          text: `${t.yes}`,
           onPress: () => {
             const deleted = history[index];
             setDeletedItem(deleted);
@@ -214,7 +215,7 @@ const ContractionsCounterScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Contractions Counter
+            {t.contractionsCounter}
           </Text>
         </View>
       </View>
@@ -261,10 +262,10 @@ const ContractionsCounterScreen = ({ navigation }) => {
         
           <Text style={[{fontSize: 17, marginLeft: 10, fontWeight: 'bold'}, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Son bir saatteki ortalama kasılma süreci</Text>
+            }]}>{t.contractionsMainTitle}</Text>
           <View style={styles.averageContainer}>
-          <Text style={{fontSize: 17, color: COLORS.primary, marginTop: 10}}>Süre</Text>
-          <Text style={{fontSize: 17, color: COLORS.primary, marginTop: 10}}>Aralık</Text>
+          <Text style={{fontSize: 17, color: COLORS.primary, marginTop: 10}}>{t.time}</Text>
+          <Text style={{fontSize: 17, color: COLORS.primary, marginTop: 10}}>{t.range}</Text>
           </View>
           <View style={styles.averageContainer}>
           <Text style={styles.hourlyCounter}>{`${formatTime({ minutes: Math.floor(averageCounter / 60), seconds: averageCounter % 60 })}`}</Text>
@@ -272,7 +273,7 @@ const ContractionsCounterScreen = ({ navigation }) => {
           </View>
     </View> :     <Text style={[{fontSize: 16}, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Yukarıdaki butonu kullanarak kasılma sürenizi başlatıp  durdurabilirsiniz. tamamen görsel amaçlıdır ne yazacağımı bilemedim.</Text>
+            }]}>{t.contractionsSubTitle}</Text>
     }
     </View>
     
@@ -289,7 +290,7 @@ const ContractionsCounterScreen = ({ navigation }) => {
             }]}>
             {item.date} {/* Gün başlığı */}
             </Text>
-            <Text style={{fontSize: 17, marginLeft: 10, color: COLORS.primary, marginTop: 10}}>Süre        Aralık         Başla</Text>
+            <Text style={{fontSize: 17, marginLeft: 10, color: COLORS.primary, marginTop: 10}}>{t.time}        {t.range}         {t.start}</Text>
             {item.records.map((record, index) => (
 
               <View key={index} style={styles.item}>

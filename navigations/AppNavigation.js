@@ -4,12 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import BottomTabNavigation from './BottomTabNavigation';
 import { ArticleShowDetailScreen, ArticlesShowScreen, AboutUsScreen, ContractionsCounterScreen, ToolsScreen, KicksCounter, Drugs, WeightControl, FindName,EditPregnancyInfo, 
-  PregnancyInfo, Call, ChangeEmail, ChangePassword, Chat, CreateNewPassword, EditProfile, FillYourProfile, 
+  PregnancyInfo, ChangeEmail, ChangePassword, Chat, CreateNewPassword, EditProfile, FillYourProfile, 
   ForgotPasswordEmail, ForgotPasswordMethods, ForgotPasswordPhoneNumber, HelpCenter, InviteFriends, Login, Notifications, Onboarding1, Onboarding2, 
-  Onboarding3, Onboarding4, PaymentMethods, Search, SettingsLanguage, SettingsNotifications, SettingsPayment, SettingsPrivacyPolicy, SettingsSecurity, Signup, Welcome, RequirementListScreen, 
+  Onboarding3, Onboarding4, Search, SettingsLanguage, SettingsNotifications, SettingsPrivacyPolicy, SettingsSecurity, Signup, Welcome, RequirementListScreen, 
   CalendarScreen, NoteForMyBabyScreen, HealthTestsScreen, AlbumScreen, BoyNamesListScreen, CalculatePregnancyScreen, WeeklyPeriodScreen, WeeklyPeriodDetailScreen, ArticlesCatagoriesScreen, HoroscopeScreen, HoroscopeDetailScreen, Home} from '../screens';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 import Loading from '../components/Loading';
+import OnlineNotifications from '@/utils/notifications/OnlineNotifications';
 
 
 const Stack = createNativeStackNavigator();
@@ -84,7 +85,6 @@ const AppNavigation = () => {
                 <Stack.Screen name="SettingsPrivacyPolicy" component={SettingsPrivacyPolicy}/>
                 <Stack.Screen name="InviteFriends" component={InviteFriends}/>
                 <Stack.Screen name="HelpCenter" component={HelpCenter}/>
-                <Stack.Screen name="Call" component={Call}/>
                 <Stack.Screen name="Chat" component={Chat}/>
                 <Stack.Screen name="Notifications" component={Notifications}/>
                 <Stack.Screen name="FindName" component={FindName}/>
@@ -109,10 +109,11 @@ const AppNavigation = () => {
                 <Stack.Screen name='ArticlesCatagoriesScreen' component={ArticlesCatagoriesScreen}/>
                 <Stack.Screen name='HoroscopeScreen' component={HoroscopeScreen}/>
                 <Stack.Screen name='HoroscopeDetailScreen' component={HoroscopeDetailScreen}/>
+                <Stack.Screen name='OnlineNotifications' component={OnlineNotifications}/>
 
               </Stack.Navigator> 
      </NavigationContainer>
-  )
+  );
 }
 
 export default AppNavigation

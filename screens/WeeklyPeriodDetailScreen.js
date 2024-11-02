@@ -2,7 +2,6 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import React, { useEffect, useState } from 'react'
 import { COLORS, SIZES, icons } from '../constants'
 import { useTheme } from '../theme/ThemeProvider'
-
 import axios from 'axios';
 import RenderHTML from 'react-native-render-html';
 import Loading from '@/components/Loading';

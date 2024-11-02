@@ -4,19 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import { useTheme } from '../theme/ThemeProvider';
 import { COLORS, SIZES, icons } from '../constants';
-import SalonCard from '../components/SalonCard';
-import { category, distances, manicure, ratings } from '../data';
-import NotFoundCard from '../components/NotFoundCard';
-import RBSheet from "react-native-raw-bottom-sheet";
-import Button from '../components/Button';
-import { FontAwesome } from "@expo/vector-icons";
 import { Agenda, Calendar} from 'react-native-calendars';
 import XDate from 'xdate';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 const CalendarScreen = ({ navigation }) => {
   
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
   
 
   const healthTestsDot = {key: 'healthTestsDot', color: 'red', selectedDotColor: 'blue'};
@@ -236,7 +232,7 @@ const CalendarScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Calendar
+            {t.calendar}
           </Text>
         </View>
       </View>

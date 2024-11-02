@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import Button from './Button';
 import { COLORS, SIZES } from '../constants';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { WeightControl } from '@/screens';
 import { WeightContext } from '@/Contexts/WeightContext';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 export default function WeightComp() {
@@ -13,10 +14,9 @@ export default function WeightComp() {
         const navigation = useNavigation();
 
         const {lastWeight} = useContext(WeightContext);
+        const {t} = useTranslation();
 
-        useEffect(() => {}, [lastWeight]);
-
-        console.log('comp: ', lastWeight);
+        useLayoutEffect(() => {}, [lastWeight]);
  
 
     return (
@@ -24,8 +24,8 @@ export default function WeightComp() {
             <Text style={styles.weightText}> {lastWeight ? `${lastWeight} KG` : '0 KG'}</Text>
             <View>
                 <Entypo name="ruler" size={30} color={COLORS.primary} style={styles.icon}/>
-                <Text style={styles.text}>Annenin Kilosu</Text>
-                <Button style={styles.button} filled onPress={()=> navigation.navigate('WeightControl')} title= 'Kilo Ekleyin' />
+                <Text style={styles.text}>{t.momsWeight}</Text>
+                <Button style={styles.button} filled onPress={()=> navigation.navigate('WeightControl')} title= {t.addWeight} />
             </View>
         </View>
       );

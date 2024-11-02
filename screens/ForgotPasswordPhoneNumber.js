@@ -7,6 +7,14 @@ import Checkbox from 'expo-checkbox';
 import Button from '../components/Button';
 import { useTheme } from '../theme/ThemeProvider';
 
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+
+
 const ForgotPasswordPhoneNumber = ({ navigation }) => {
     const [error, setError] = useState(null);
     const [isChecked, setChecked] = useState(false);

@@ -1,10 +1,12 @@
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { COLORS, SIZES, icons } from '../constants'
 import { useTheme } from '../theme/ThemeProvider'
 import Header from '../components/Header';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { useTranslation } from '@/Contexts/useTranslation'
+import { TranslationsContext } from '@/Contexts/LanguageContext'
 
 export default function ArticleShowScreen({ route, navigation }) {
 
@@ -14,7 +16,9 @@ export default function ArticleShowScreen({ route, navigation }) {
     const imagePath = 'https://momhera.com';
     const id = route.params.id;
     const name = route.params.name ;
+    const { t } = useTranslation();
 
+    const { language } = useContext(TranslationsContext);
 
 
     useEffect(() => {
@@ -26,7 +30,7 @@ export default function ArticleShowScreen({ route, navigation }) {
             params: {
               CategoryId: id,
              // TagId: '',
-              Language: 'tr',
+              Language: language,
               PageIndex : 0,
               PageSize: 100,
             },
@@ -106,8 +110,8 @@ export default function ArticleShowScreen({ route, navigation }) {
               <View style={styles.buttonContainer}>
                   <Text style={[styles.serviceTitle, { 
                     color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-                  }]}>Tags:</Text>
-                  <Text style={styles.serviceText}>    Month 1, Month2, Feeding </Text>
+                  }]}> Görüntülenme sayısı</Text>
+                  <Text style={styles.serviceText}>    Görüntülenme sayısı </Text>
                   </View>
                 </View>
             </View>
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
            backgroundColor: COLORS.white,
            paddingHorizontal: 8,
            paddingVertical: 4,
-           marginBottom: 16
+           marginBottom: 10
          },
          dateContainer: {
            flexDirection: "row",
@@ -192,13 +196,14 @@ const styles = StyleSheet.create({
         },
         detailsContainer: {
           flexDirection: "row",
-          alignItems: "center",
+          //alignItems: "center",
         },
         barberImage: {
-          width: 88,
-          height: 88,
+          width: 100,
+          height: 100,
           borderRadius: 16,
-          marginHorizontal: 12
+          marginHorizontal: 3,
+          marginTop: 5,
         },
         detailsRightContainer: {
           flex: 1,

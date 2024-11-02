@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, Image, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, icons, images } from '../constants';
-import Header from '../components/Header';
 import { reducer } from '../utils/reducers/formReducers';
 import { validateInput } from '../utils/actions/formActions';
 import Input from '../components/Input';
@@ -12,9 +11,7 @@ import SocialButton from '../components/SocialButton';
 import OrSeparator from '../components/OrSeparator';
 import { useTheme } from '../theme/ThemeProvider';
 import { apiRegister } from '../apiConnections/RegisterApi';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePicker from 'react-native-date-picker';
-import { getToday } from 'react-native-modern-datepicker';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const isTestMode = false
 
@@ -41,6 +38,8 @@ const Signup = ({ navigation }) => {
 
 
   const { colors, dark } = useTheme();
+  const { t } = useTranslation();
+
 
   const inputChangedHandler = useCallback(
     (inputId, inputValue) => {
@@ -55,7 +54,7 @@ const Signup = ({ navigation }) => {
       //   setPassword(inputValue);
       // }
     },
-    [dispatchFormState]
+    [dispatchFormState,t]
   )
 
   // implementing apple authentication
@@ -75,7 +74,7 @@ const Signup = ({ navigation }) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An error occured', error)
+      Alert.alert(`${t.anErrorOccured}`, error)
     }
   }, [error])
 
@@ -90,21 +89,21 @@ const Signup = ({ navigation }) => {
     const { email, password } = formState.inputValues;
 
     if (!formState.formIsValid) {
-      Alert.alert('Invalid input', 'Please check your input values.');
+      Alert.alert(`${t.invalid}`, `${t.pleaseCheckInput}`);
       return;
     }
 
     try {
       const result = await apiRegister(email, password);
       if (result.success) {
-        Alert.alert('Success', 'User registered successfully');
+        Alert.alert(`${t.success}`, `${t.successfullyRegistered}`);
         navigation.navigate("FillYourProfile");
       } else {
-        Alert.alert('Error', result.message);
+        Alert.alert(`${t.anErrorOccured}`, `${t.alreadyHave}`);
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', 'An unexpected error occurred');
+      Alert.alert(`${t.anErrorOccured}`, `${t.anErrorOccured}`);
     }
   };
 
@@ -127,7 +126,7 @@ const Signup = ({ navigation }) => {
           </View>
           <Text style={[styles.title, {
             color: dark ? COLORS.white : COLORS.black
-          }]}>Create Your Account</Text>
+          }]}>{t.createYourAccount}</Text>
           <Input
             id="email"
             onInputChanged={inputChangedHandler}
@@ -142,7 +141,7 @@ const Signup = ({ navigation }) => {
             errorText={formState.inputValidities['password']}
             autoCapitalize="none"
             id="password"
-            placeholder="Password"
+            placeholder={t.password}
             placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
             icon={icons.padlock}
             secureTextEntry={true}
@@ -158,12 +157,12 @@ const Signup = ({ navigation }) => {
               <View style={{ flex: 1 }}>
                 <Text style={[styles.privacy, {
                   color: privacyError ? COLORS.red : dark ? COLORS.white : COLORS.black
-                }]}>By continuing you accept our Privacy Policy</Text>
+                }]}>{t.acceptPrivacyPolicy}</Text>
               </View>
             </View>
           </View>
           <Button
-            title="Sign Up"
+            title={t.signUp}
             filled
             onPress={handleSingUp}
             style={styles.button}
@@ -171,7 +170,7 @@ const Signup = ({ navigation }) => {
 
 
           <View>
-            <OrSeparator text="or continue with" />
+            <OrSeparator text={t.orContinueWith}/>
             <View style={styles.socialBtnContainer}>
               <SocialButton
                 icon={icons.appleLogo}
@@ -191,11 +190,11 @@ const Signup = ({ navigation }) => {
             <View style={styles.bottomContainer}>
           <Text style={[styles.bottomLeft, {
             color: dark ? COLORS.white : COLORS.black
-          }]}>Already have an account ?</Text>
+          }]}>{t.alreadyHaveAnAccount}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("Login")}
           >
-            <Text style={styles.bottomRight}>{" "}Sign In</Text>
+            <Text style={styles.bottomRight}>{" "}{t.signIn}</Text>
           </TouchableOpacity>
         </View>
           </View>

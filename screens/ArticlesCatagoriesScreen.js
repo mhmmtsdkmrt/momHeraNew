@@ -6,9 +6,11 @@ import ArticlesTabSelection from '../tabs/ArticlesTabSelection';
 import { useTheme } from '../theme/ThemeProvider';
 import { useNavigation } from '@react-navigation/native';
 import ArticlesApi from '../apiConnections/ArticlesApi';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const ArticlesCatagoriesScreen = () => {
   const { colors, dark } = useTheme();
+  const { t } = useTranslation();
 
   const navigation = useNavigation();
 
@@ -36,7 +38,7 @@ const ArticlesCatagoriesScreen = () => {
           </TouchableOpacity>
             <Text style={[styles.headerTitle, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Articles</Text>
+            }]}>{t.articles}</Text>
          </View>
       </View>
     )

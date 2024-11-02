@@ -1,4 +1,7 @@
+
 import { COLORS, icons, images } from "../constants";
+
+
 
 export const friends = [
     {
@@ -722,6 +725,7 @@ export const notifications = [
 ];
 
 export const categories = [
+
     {
       id: "1",
       name: "Find Name",

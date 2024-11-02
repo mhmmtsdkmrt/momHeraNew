@@ -13,6 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import BoyNames from '../tabs/BoyNames';
 import GirlNames from '../tabs/GirlNames';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const renderScene = SceneMap({
   first: BoyNames,
@@ -23,10 +24,12 @@ const FindName = ({ navigation }) => {
   const layout = useWindowDimensions();
   const { dark, colors } = useTheme();
 
+  const { t } = useTranslation();
+
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Boy' },
-    { key: 'second', title: 'Girl' },
+    { key: 'first', title: `${t.boy}` },
+    { key: 'second', title: `${t.girl}`},
   ]);
 
   const renderTabBar = (props) => (
@@ -70,7 +73,7 @@ const FindName = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Find Name
+            {t.findName}
           </Text>
         </View>
         <View style={styles.headerRight}>

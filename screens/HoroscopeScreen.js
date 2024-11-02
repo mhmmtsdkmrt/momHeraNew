@@ -7,6 +7,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import Button from '@/components/Button';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 export default function HoroscopeScreen() {
@@ -16,21 +17,22 @@ export default function HoroscopeScreen() {
     const [selectedMomHoroscope, setSelectedMomHoroscope] = useState('');
     const [selectedBabyHoroscope, setSelectedBabyHoroscope] = useState('');
     const [showWarning, setShowWarning] = useState(false);
+    const { t } = useTranslation();
 
 
     const horoscopeData = [
-        { label: 'Koç (21 Mart - 20 Nisan)', value: 1 }, 
-        { label: 'Boğa (21 Nisan - 20 Mayıs)', value: 2 },
-        { label: 'İkizler (21 Mayıs - 21 Haziran)', value: 3 }, 
-        { label: 'Yengeç (22 Haziran - 22 Temmuz)', value: 4 }, 
-        { label: 'Aslan (23 Temmuz - 23 Ağustos)', value: 5 },
-        { label: 'Başak (24 Ağustos - 23 Eylül)', value: 6 }, 
-        { label: 'Terazi (24 Eylül - 23 Ekim)', value: 7 },
-        { label: 'Akrep (24 Ekim - 22 Kasım)', value: 8 }, 
-        { label: 'Yay (23 Kasım - 21 Aralık)', value: 9 }, 
-        { label: 'Oğlak (22 Aralık - 20 Ocak)', value: 10 },
-        { label: 'Kova (21 Ocak - 19 Şubat)', value: 11 }, 
-        { label: 'Balık (20 Şubat - 20 Mart)', value: 12 },
+        { label: `${t.aries}`, value: 1 }, 
+        { label: `${t.taurus}`, value: 2 },
+        { label: `${t.gemini}`, value: 3 }, 
+        { label: `${t.cancer}`, value: 4 }, 
+        { label: `${t.leo}`, value: 5 },
+        { label: `${t.virgo}`, value: 6 }, 
+        { label: `${t.libra}`, value: 7 },
+        { label: `${t.scorpio}`, value: 8 }, 
+        { label: `${t.sagittarius}`, value: 9 }, 
+        { label: `${t.capricorn}`, value: 10 },
+        { label: `${t.aquarius}`, value: 11 }, 
+        { label: `${t.pisces}`, value: 12 },
       ];
 
 
@@ -74,7 +76,7 @@ export default function HoroscopeScreen() {
               </TouchableOpacity>
                 <Text style={[styles.headerTitle, {
                   color: dark ? COLORS.white : COLORS.greyscale900
-                }]}>Horoscope Compatibility</Text>
+                }]}>{t.horoscopeCompatibility}</Text>
              </View>
           </View>
         )
@@ -89,9 +91,9 @@ export default function HoroscopeScreen() {
         <View style={[styles.subContainer, { backgroundColor: colors.background}]}>
         <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Annenin Burcu</Text>
+                    }]}>{t.momHoroscope}</Text>
                 <RNPickerSelect
-                    placeholder={{ label: "Annenin Burcu", value: 'Seçiniz' }}
+                    placeholder={{ label: `${t.momHoroscope}`, value: 'Seçiniz' }}
                     items={horoscopeData}
                     onValueChange={(value) => handleMomHoroscopeChange(value)}
                     value={selectedMomHoroscope}
@@ -126,9 +128,9 @@ export default function HoroscopeScreen() {
                     />   
         <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.greyscale900
-                    }]}>Bebebğin Burcu</Text>
+                    }]}>{t.babyHoroscope}</Text>
                 <RNPickerSelect
-                    placeholder={{ label: "Bebeğin Burcu", value: 'Seçiniz' }}
+                    placeholder={{ label: `${t.babyHoroscope}`, value: 'Seçiniz' }}
                     items={horoscopeData}
                     onValueChange={(value) => handleBabyHoroscopeChange(value)}
                     value={selectedBabyHoroscope}
@@ -165,7 +167,7 @@ export default function HoroscopeScreen() {
 
             <View style={{marginTop: 25}}>
             {showWarning ? (
-            <Button title="Burç Seçimi Yapınız !" filled /> ) :  <Button title="Burç Uyumunu Görün" onPress={handlePress} filled />
+            <Button title={t.chooseHoroscope} filled /> ) :  <Button title={t.seeHoroscope} onPress={handlePress} filled />
             }
             </View>
 

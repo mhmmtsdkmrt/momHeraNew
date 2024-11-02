@@ -34,8 +34,8 @@ export default function ArticlesSlider() {
 const styles = StyleSheet.create({
     container: {
         width: SIZES.width-32,
-        height: 200,
-        borderRadius: 20,
+        height: 210,
+        borderRadius: 11,
         borderTopWidth: 1,
         marginTop: 20,
         borderColor: COLORS.transparentSecondary,

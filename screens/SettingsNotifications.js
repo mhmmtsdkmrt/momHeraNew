@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-virtualized-view';
 import Header from '../components/Header';
 import GlobalSettingsItem from '../components/GlobalSettingsItem';
 import { useTheme } from '../theme/ThemeProvider';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const SettingsNotifications = () => {
     const [isGeneralNotificationsEnabled, setIsGeneralNotificationsEnabled] = useState(true);
@@ -14,6 +15,7 @@ const SettingsNotifications = () => {
     const [isVibrateEnabled, setIsVibrateEnabled] = useState(false);
     const [isAppUpdatesEnabled, setIsAppUpdatesEnabled] = useState(true);
     const { colors, dark } = useTheme();
+    const { t } = useTranslation();
 
     // handle notifications
     const toggleGeneralNotifications = ()=>{
@@ -37,27 +39,27 @@ const SettingsNotifications = () => {
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <StatusBar hidden />
-            <Header title="Notifications" />
+            <Header title={t.notifications} />
             <ScrollView 
                 style={styles.settingsContainer} 
                 showsVerticalScrollIndicator={false}>
                <GlobalSettingsItem
-                 title="General Notifications"
+                 title={t.generalNotification}
                  isNotificationEnabled={isGeneralNotificationsEnabled}
                  toggleNotificationEnabled={toggleGeneralNotifications}
                />
                <GlobalSettingsItem
-                 title="Sound"
+                 title={t.sound}
                  isNotificationEnabled={isSoundEnabled}
                  toggleNotificationEnabled={toggleSound}
                />
                <GlobalSettingsItem
-                 title="Vibrate"
+                 title={t.vibrate}
                  isNotificationEnabled={isVibrateEnabled}
                  toggleNotificationEnabled={toggleVibrate}
                />
                <GlobalSettingsItem
-                 title="App Updates"
+                 title={t.appUpdates}
                  isNotificationEnabled={isAppUpdatesEnabled}
                  toggleNotificationEnabled={toggleAppUpdates}
                />

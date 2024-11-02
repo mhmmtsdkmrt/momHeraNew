@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, ImageBackground, BackHandler, Alert } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useTransition } from 'react';
 import { COLORS, SIZES, icons } from '../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
@@ -16,6 +16,7 @@ import { ProfileContext } from '../Contexts/ProfileGetApi';
 import BabySizeWeight from '../components/BabySizeWeight';
 import { useIsFocused } from '@react-navigation/native';
 import ArticlesSlider from '../components/ArticlesSlider';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 const Home = ({ navigation }) => {
@@ -23,17 +24,20 @@ const Home = ({ navigation }) => {
   const { profileData } = useContext(ProfileContext);
   const isFocused = useIsFocused();
 
+  const {t} = useTranslation();
+
 
   useEffect(() => {
     const backAction = () => {
       if(isFocused) {
-      Alert.alert("Çıkmak İstediğinize Emin Misiniz?", "login e dön", [
+      Alert.alert(`${t.quitApp}`, `${t.backToLogin}`, [
         {
-          text: "Hayır",
+          text: `${t.no}`,
           onPress: () => null,
           style: "cancel"
         },
-        { text: "Evet", onPress: () => navigation.navigate('Login') }
+        { text: `${t.yes}`, 
+        onPress: () => navigation.navigate('Login') }
       ]);
       return true;
     }
@@ -98,8 +102,8 @@ const Home = ({ navigation }) => {
     return (
       <View>
         <SubHeaderItem
-          title="Tools"
-          navTitle="See All"
+          title={t.tools}
+          navTitle={t.seeAll}
           onPress={() => navigation.navigate('ToolsScreen')}
         />
 
@@ -127,6 +131,7 @@ const Home = ({ navigation }) => {
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {renderHeader()}
         <ScrollView showsVerticalScrollIndicator = {false} style={styles.contentContainer}>
+        <BabySizeWeight/>
         <View style={styles.imageContainer}>
         <ImageBackground
         resizeMode='contain'
@@ -135,15 +140,15 @@ const Home = ({ navigation }) => {
         source={require('../assets/images/1Hafta.png')}
         borderRadius={20}>
 
-            <BabySizeWeight/>
+<BabySizeWeight/>
 
         </ImageBackground>
 
         </View>
+        
+        <EstimatedDateOfBirth/>
 
-
-
-        {renderCategories()}
+        {/* {renderCategories()} */}
 
         <EstimatedDateOfBirth/>
         <ArticlesSlider/>
@@ -336,19 +341,20 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: SIZES.width -32,
-    height: 280,
-    borderWidth: 1,
-    borderRadius: 20,
-    borderWidth: 0.05,
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 1,
-        height: 1,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
+    height: 220,
+    marginBottom: 90
+    // borderWidth: 1,
+    // borderRadius: 20,
+    // borderWidth: 0.05,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //     width: 1,
+    //     height: 1,
+    // },
+    // shadowOpacity: 0.27,
+    // shadowRadius: 4.65,
     
-    elevation: 4,
+    // elevation: 4,
 
   }
 

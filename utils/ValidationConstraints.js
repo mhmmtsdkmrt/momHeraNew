@@ -1,6 +1,7 @@
 import { validate } from 'validate.js';
 
 export const validateString = (id,value)=>{
+  
     const constraints = {
         presence: {
             allowEmpty: false
@@ -35,6 +36,7 @@ export const validateEmail = (id,value)=>{
 }
 
 export const validatePassword = (id,value)=>{
+
     const constraints = {
         presence : {
             allowEmpty:false

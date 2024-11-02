@@ -4,15 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-virtualized-view';
 import { useTheme } from '../theme/ThemeProvider';
 import { COLORS, SIZES, icons } from '../constants';
-import SalonCard from '../components/SalonCard';
-import { category, distances, manicure, ratings } from '../data';
-import NotFoundCard from '../components/NotFoundCard';
-import RBSheet from "react-native-raw-bottom-sheet";
-import Button from '../components/Button';
-import { FontAwesome } from "@expo/vector-icons";
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const HealthTestsScreen = ({ navigation }) => {
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
 
   /**
  * Render header
@@ -34,7 +30,7 @@ const HealthTestsScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Health Tests
+            {t.healthTests}
           </Text>
         </View>
       </View>
@@ -49,7 +45,7 @@ const HealthTestsScreen = ({ navigation }) => {
     <View style= {[{flex: 1, alignItems: 'center', justifyContent: 'center'} , { backgroundColor: colors.background }]}>
     <Text style={[{fontSize: 25}, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}> Coming Soon...</Text>
+            }]}>{t.comingSoon}</Text>
     </View>
 </View>
 </SafeAreaView>

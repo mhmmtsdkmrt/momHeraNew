@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView,  TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView,  TouchableOpacity, Image, ImageBackground } from 'react-native';
 import React from 'react';
 import { COLORS, SIZES } from '../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,108 +7,122 @@ import { useTheme } from '../theme/ThemeProvider';
 import { AntDesign, Entypo, Fontisto, MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 const ToolsScreen = ({ navigation }) => {
   const { colors, dark } = useTheme();
+  const {t} = useTranslation();
   const size = 40;
+  const imageUri = {uri: 'https://momhera.com/Theme/dashboard/assets/dist/img/corner.png'};
+ 
 
 
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Header title="Tools" />
+        <Header title={t.tools} />
        
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={[styles.container1, { backgroundColor: colors.background }]}>
+            <ImageBackground source={imageUri} resizeMode="cover" style={styles.boxContainer}/>
+          <ImageBackground/>
+          <ImageBackground source={imageUri} resizeMode="cover" style={styles.boxContainer}/>
+          <ImageBackground/>
+          <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}  >
+                <TouchableOpacity onPress={()=> navigation.navigate('OnlineNotifications')}>
+                  <MaterialCommunityIcons name="format-letter-case" size={size} style={styles.Icons}/>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.notifications}</Text>
+                </TouchableOpacity>
+              </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}  >
                 <TouchableOpacity onPress={()=> navigation.navigate('FindName')}>
                   <MaterialCommunityIcons name="format-letter-case" size={size} style={styles.Icons}/>
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Find Name</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.findName}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}  >
                 <TouchableOpacity onPress={()=> navigation.navigate('CalculatePregnancyScreen')}>
                   <MaterialIcons name="calculate" size={size} style={styles.Icons}/>
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Calculate Pregnancy</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.calculatePregnancy}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('WeeklyPeriodScreen')}>
                   <MaterialCommunityIcons name="periodic-table" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Weekly Period</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.weeklyPeriod}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('HoroscopeScreen')}>
                   <FontAwesome name="connectdevelop" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Horoscope Compatibility</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.horoscopeCompatibility}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('WeightControl')}>
                   <MaterialCommunityIcons name="format-line-weight" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Weight Control</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.weightControl}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('Drugs')}>
                   <Fontisto name="drug-pack" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Drugs</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.drugs}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('KicksCounter')}>
                   <MaterialCommunityIcons name="counter" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Kicks Counter</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.kicksCounter}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('ContractionsCounterScreen')}>
                   <MaterialCommunityIcons name="cog-counterclockwise" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Contractions Counter</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.contractionsCounter}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}>
                 <TouchableOpacity onPress={()=> navigation.navigate('RequirementListScreen')}>
                   <MaterialCommunityIcons name="bag-checked" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Requirement List</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.requirementList}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}>
                 <TouchableOpacity onPress={()=> navigation.navigate('CalendarScreen')}>
                   <AntDesign name="calendar" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Calendar</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.calendar}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}>
                 <TouchableOpacity onPress={()=> navigation.navigate('NoteForMyBabyScreen')}>
                   <MaterialCommunityIcons name="notebook-edit-outline" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Note For My Baby</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.noteForMyBaby}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}>
                 <TouchableOpacity onPress={()=> navigation.navigate('HealthTestsScreen')}>
                   <Fontisto name="test-tube" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Health Tests</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.healthTests}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]}>
                 <TouchableOpacity onPress={()=> navigation.navigate('AlbumScreen')}>
                   <AntDesign name="picture" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Album</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.album}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('HelpCenter')}>
                   <MaterialCommunityIcons name="crosshairs-question" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>FQA</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.FAQ}</Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.boxContainer, {backgroundColor: dark ? COLORS.greyscale900 : COLORS.tansparentPrimary}]} >
                 <TouchableOpacity onPress={()=> navigation.navigate('HelpCenter', {key: 'second'})}>
                   <AntDesign name="customerservice" size={size} style={styles.Icons} />
-                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>Contact Us</Text>
+                  <Text style={[styles.text, {color: dark ? COLORS.white : COLORS.primary}]}>{t.contactUs}</Text>
                 </TouchableOpacity>
               </View>
  

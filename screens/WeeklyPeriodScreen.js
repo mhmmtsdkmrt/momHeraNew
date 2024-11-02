@@ -14,11 +14,13 @@ import axios from 'axios';
 import Header from '../components/Header';
 import Loading from '@/components/Loading';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { useTranslation } from '@/Contexts/useTranslation'
 
 
 export default function WeeklyPeriodScreen() {
     const { colors, dark } = useTheme();
     const layout = useWindowDimensions();
+    const { t } = useTranslation();
 
 
     const navigation = useNavigation();
@@ -33,7 +35,7 @@ export default function WeeklyPeriodScreen() {
     const [postId, setPostId] = useState();
     const routes = Array.from({ length: 42 }, (_, i) => ({
         key: `week${i + 1}`,
-        title: `${i + 1}. hafta`,
+        title: `${i + 1}.`+`${t.week}`,
     }));
 
 
@@ -82,16 +84,16 @@ export default function WeeklyPeriodScreen() {
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={styles.howMuchDetail}>
                     <Entypo name="ruler" size={25} color={COLORS.primary} style={styles.icons}/>
-                    <Text style={styles.title}>Uzunluk: </Text><Text style={styles.titleData}>{weekData?.size}</Text>
+                    <Text style={styles.title}>{t.length}: </Text><Text style={styles.titleData}>{weekData?.size}</Text>
                 </View>
                 <View style={styles.howMuchDetail}>
                     <FontAwesome6 name="weight-scale" size={25} color={COLORS.primary} style={styles.icons}/>
-                    <Text style={styles.title}>Ağırlık: </Text><Text style={styles.titleData}>{weekData?.weight}</Text>
+                    <Text style={styles.title}>{t.weight}: </Text><Text style={styles.titleData}>{weekData?.weight}</Text>
                 </View>
                 </View>
                 <View style={styles.howMuchDetail}>
                     <FontAwesome5 name="baby" size={25} color={COLORS.primary} style={styles.icons}/>
-                    <Text style={styles.title}>Boyut: </Text><Text style={[styles.titleData, {marginEnd: 70}]}>{weekData?.title}</Text>
+                    <Text style={styles.title}>{t.size}: </Text><Text style={[styles.titleData, {marginEnd: 70}]}>{weekData?.title}</Text>
                 </View>
                 </View>
             
@@ -101,7 +103,7 @@ export default function WeeklyPeriodScreen() {
                     <View style={{flex: 1}}>
                     <Text ellipsizeMode='tail' numberOfLines={5} style={styles.weeklyDetailTitle}>{weekDataApi.description}</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('WeeklyPeriodDetailScreen', {id: postId})}>
-                    <Text style={{alignSelf: 'flex-end', color: COLORS.primary, fontFamily: 'bold', fontSize: 15}}>Devamını oku..</Text>
+                    <Text style={{alignSelf: 'flex-end', color: COLORS.primary, fontFamily: 'bold', fontSize: 15}}>{t.readMore}</Text>
                     </TouchableOpacity>
                     </View>
 
@@ -111,7 +113,7 @@ export default function WeeklyPeriodScreen() {
 
                 <View style={styles.questionsContainer}>
 
-                        <Text style={{marginLeft: 12, color: COLORS.primary, fontSize: 16, fontFamily: "bold", borderBottomColor: 'grey', borderBottomWidth: 1, marginEnd: 50}}>Bunlarda ilginizi çekebilir.</Text>
+                        <Text style={{marginLeft: 12, color: COLORS.primary, fontSize: 16, fontFamily: "bold", borderBottomColor: 'grey', borderBottomWidth: 1, marginEnd: 50}}>Bunlar da ilginizi çekebilir.</Text>
 
                         <TouchableOpacity>
                             <View style={styles.questionsDownContainer}>
@@ -183,7 +185,7 @@ export default function WeeklyPeriodScreen() {
           </TouchableOpacity>
                 <Text style={[styles.headerTitle, {
                   color: dark ? COLORS.white : COLORS.greyscale900
-                }]}> Hafta Hafta Hamilelik</Text>
+                }]}> {t.weekByWeek}</Text>
              </View>
           </View>
         )
@@ -192,7 +194,7 @@ export default function WeeklyPeriodScreen() {
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Header title="Hafta Hafta Hamilelik"/>
+            <Header title={t.weekByWeek}/>
             {/* {renderHeader()} */}
 
             <TabView

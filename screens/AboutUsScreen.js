@@ -3,8 +3,10 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../theme/ThemeProvider';
 import { COLORS, SIZES, icons } from '../constants';
+import { useTranslation } from '@/Contexts/useTranslation';
 const AboutUsScreen = ({ navigation }) => {
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
 
   /**
  * Render header
@@ -26,7 +28,7 @@ const AboutUsScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            About Us
+            {t.aboutUs}
           </Text>
         </View>
       </View>

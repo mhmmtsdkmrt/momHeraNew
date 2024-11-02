@@ -7,12 +7,14 @@ import { ScrollView } from 'react-native-virtualized-view';
 import GlobalSettingsItem from '../components/GlobalSettingsItem';
 import Button from '../components/Button';
 import { useTheme } from '../theme/ThemeProvider';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const SettingsSecurity = ({ navigation }) => {
   const [isRememberMeEnabled, setIsRememberMeEnabled] = useState(true);
   // const [isFaceIDEnabled, setIsFaceIDEnabled] = useState(false);
   // const [isBiometricIDEnabled, setIsBiometricIDEnabled] = useState(true);
   const { colors, dark } = useTheme();
+  const { t } = useTranslation();
 
   const toggleRememberMe = () => {
     setIsRememberMeEnabled(!isRememberMeEnabled);
@@ -28,11 +30,11 @@ const SettingsSecurity = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Header title="Security" />
+        <Header title={t.security} />
         <ScrollView style={styles.scrollView}
           showsVerticalScrollIndicator={false}>
           <GlobalSettingsItem
-            title="Remember me"
+            title={t.rememberMe}
             isNotificationEnabled={isRememberMeEnabled}
             toggleNotificationEnabled={toggleRememberMe}
           />
@@ -66,7 +68,7 @@ const SettingsSecurity = ({ navigation }) => {
             onPress={() => { navigation.navigate("ChangePIN") }}
           /> */}
           <Button
-            title="Change Password"
+            title={t.changePassword}
             style={{
               backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
               borderRadius: 32,
@@ -77,7 +79,7 @@ const SettingsSecurity = ({ navigation }) => {
             onPress={() => { navigation.navigate("ChangePassword") }}
           />
           <Button
-            title="Change Email"
+            title={t.changeEmail}
             style={{
               backgroundColor: dark ? COLORS.dark3 : COLORS.tansparentPrimary,
               borderRadius: 32,

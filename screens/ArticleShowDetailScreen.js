@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { Image, SafeAreaView, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { COLORS, SIZES, icons } from '../constants'
@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Loading from '@/components/Loading'
 import RenderHTML from 'react-native-render-html'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { htmlToText } from 'html-to-text';
 
 export default function ArticleShowDetailScreen({ route, navigation }) {
 
@@ -32,6 +33,8 @@ export default function ArticleShowDetailScreen({ route, navigation }) {
         const imagePath = 'https://momhera.com'
         content = content.replace(/<img\s+src="(\/[^"]+)"/g, `<img src="${imagePath}$1"`);
 
+        const plainTextContent = htmlToText
+
         setHeader(response.data.data.title);
         setContent(content);
       } catch (e) {
@@ -47,6 +50,15 @@ export default function ArticleShowDetailScreen({ route, navigation }) {
     useEffect(() => {
         getResult(id);
     },[id]);
+
+
+        //   /// Makale paylaşım için kullanıalcak.
+        //   const onShare = async () => {
+        //     const result = await Share.share({
+        //       message:
+        //         'paylaşılacak metin',
+        //     });
+        // };
 
   /**
  * Render header
@@ -71,6 +83,16 @@ export default function ArticleShowDetailScreen({ route, navigation }) {
             {header}
           </Text>
         </View>
+            {/* <View style={styles.viewRight}>
+            <TouchableOpacity
+             onPress={onShare}>
+              <Image
+                source={icons.share}
+                resizeMode='contain'
+                style={[styles.shareIcon, { tintColor: dark ? COLORS.white : COLORS.greyscale900 }]}
+              />
+            </TouchableOpacity>
+          </View> */}
       </View>
     )
   }
@@ -148,6 +170,21 @@ const styles = StyleSheet.create({
             fontFamily: "bold",
             color: COLORS.black,
             marginVertical: 26
+        },
+        viewRight: {
+          flexDirection: "row",
+          alignItems: "center"
+        },
+        bellIcon: {
+          height: 24,
+          width: 24,
+          tintColor: COLORS.black,
+          marginRight: 8
+        },
+        shareIcon: {
+          height: 24,
+          width: 24,
+          tintColor: COLORS.black
         },
         body: {
             fontSize: 14,

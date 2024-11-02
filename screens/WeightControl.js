@@ -12,6 +12,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { ProfileContext } from '@/Contexts/ProfileGetApi';
 import { useNavigation } from '@react-navigation/native';
 import { WeightContext } from '@/Contexts/WeightContext';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 
 
@@ -35,6 +36,7 @@ const WeightControl = () => {
   const {currentWeek} = useContext(ProfileContext);
   const {lastWeight, setLastWeight} = useContext(WeightContext);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
 
   const handleOnPressStartDate = () => {
@@ -103,8 +105,6 @@ const WeightControl = () => {
 
     }
 
-    console.log(lastWeight);
-
 
    // Render modal
    const renderModal = () => {
@@ -121,12 +121,12 @@ const WeightControl = () => {
           <View style={styles.modalContainer}>
             <View style={[styles.modalSubContainer, { backgroundColor: dark ? COLORS.dark2 : COLORS.white }]}>
 
-              {data.length > 0 ? (<Text style={styles.modalTitle}>Yeni Kilonuzu ekleyin</Text>) : (<Text style={styles.modalTitle}>Kilonuzu ekleyin</Text>)}
+              {data.length > 0 ? (<Text style={styles.modalTitle}>{t.addWeight}</Text>) : (<Text style={styles.modalTitle}>{t.addWeight2}</Text>)}
               
 
-              <Text style={styles.modalNotes}>Sağlıklı kilo alımı sizin ve bebeğiniz için çok önemlidir. bu araç ağırlık günlüklerinizi takip etmenize yardımcı olacaktır.</Text>
+              <Text style={styles.modalNotes}>{t.weightModalTitle}</Text>
 
-              {data.length > 0 ? (<Text style={styles.modalSubtitle}>Yeni kilonuzu giriniz.</Text>) : (<Text style={styles.modalSubtitle}>Hamilelik öncesi kilonuzu giriniz.</Text>)}
+              {data.length > 0 ? (<Text style={styles.modalSubtitle}>{t.enterWeight}</Text>) : (<Text style={styles.modalSubtitle}>{t.enterPreWeight}</Text>)}
 
               
 
@@ -175,7 +175,7 @@ const WeightControl = () => {
               <View style={styles.rightContainer}>
                       <Text style={[styles.settingsName, {
                        color: dark ? COLORS.white : COLORS.greyscale900
-                       }]}>Hatırlat</Text>
+                       }]}>{t.remind}</Text>
                   <Switch
                   value={isRemind}
                   onValueChange={toggleReminder}
@@ -186,11 +186,11 @@ const WeightControl = () => {
                   />
 
               </View>
-              <Text style={styles.modalNotes}>Düzenli günlükler, sağlıklı kilo alımını izlemenize ve konrumanıza yardımcı olur.</Text>   
+              <Text style={styles.modalNotes}>{t.infoWeight}</Text>   
 
               <View style={{ flexDirection: 'row-reverse' }}>
                 <Button
-                  title="Kaydet"
+                  title={t.save}
                   filled
                   onPress={() => {
                      handleEntry();
@@ -201,7 +201,7 @@ const WeightControl = () => {
                     marginLeft: 10
                   }} />
                 <Button
-                  title="Vazgeç"
+                  title={t.cancel}
                   outlined
                   onPress={() => {
                     setModalVisible(false);
@@ -237,11 +237,11 @@ const WeightControl = () => {
           <View style={styles.modalDeleteContainer}>
             <View style={[styles.modalDeleteSubContainer, { backgroundColor: dark ? COLORS.dark2 : COLORS.white }]}>
 
-            <Text style={styles.modalSubtitle}>Kaydı silmek istediğinize emin misiniz?</Text>
+            <Text style={styles.modalSubtitle}>{t.sureDelete}</Text>
 
               <View>
                 <Button
-                  title="Sil"
+                  title={t.delete}
                   filled
                   onPress={() => {
                      removeItem(selectedItem);
@@ -251,7 +251,7 @@ const WeightControl = () => {
                     marginTop: 12,
                   }} />
                 <Button
-                  title="Vazgeç"
+                  title={t.cancel}
                   outlined
                   onPress={() => {
                     setModalDeleteVisible(false);
@@ -289,7 +289,7 @@ const WeightControl = () => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Weight Control
+            {t.weightControl}
           </Text>
           {renderModal()}
         </View>
@@ -331,17 +331,17 @@ const WeightControl = () => {
 
           <View style={styles.generalAnalysisSubContainer}>
             <Text style={[{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}, {color: dark ? COLORS.white : COLORS.greyscale900}]}>{firstWeight} kg</Text>
-            <Text style={[{fontSize: 17, marginLeft: 10}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 3}]}>Başlangıç</Text>
+            <Text style={[{fontSize: 17, marginLeft: 10}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 3}]}>{t.start}</Text>
           </View>
           <View style={styles.generalAnalysisSubContainer}>
             {lastWeight !== null ? 
             (<Text style={[{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}, {color: dark ? COLORS.white : COLORS.greyscale900}]}>{lastWeight} kg</Text>) : (<Text> -- kg</Text>)}
-            <Text style={[{fontSize: 17, marginLeft: 10}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 3}]}>Geçerli</Text>
+            <Text style={[{fontSize: 17, marginLeft: 10}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 3}]}>{t.current}</Text>
           </View>
           <View style={styles.generalAnalysisSubContainer}>
             {lastWeight !== null ? 
             (<Text style={[{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}, {color: dark ? COLORS.white : COLORS.greyscale900}]}>{difference} kg</Text>) : (<Text> -- kg</Text>)}
-            <Text style={[{fontSize: 17, marginLeft: 10}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 3}]}>Değişim</Text>
+            <Text style={[{fontSize: 17, marginLeft: 10}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 3}]}>{t.change}</Text>
           </View>  
 
         </View> )}
@@ -349,7 +349,7 @@ const WeightControl = () => {
     <View style= {[{flex: 1, marginTop: 12, alignItems: 'center', justifyContent: 'center'} , { backgroundColor: colors.background }]}>
         
         <View style={{alignSelf: 'flex-start'}}>
-          <Text style={[{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}, {color: dark ? COLORS.white : COLORS.greyscale600,}]}>Tarihçe</Text>
+          <Text style={[{fontSize: 20, marginLeft: 10, fontWeight: 'bold'}, {color: dark ? COLORS.white : COLORS.greyscale600,}]}>{t.history}</Text>
         </View>     
     <FlatList
         data={data}
@@ -377,10 +377,10 @@ const WeightControl = () => {
             {weightDifference !== null && (
               <>
               <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10,}}>
-                <Text style={[{fontSize: 15, marginLeft: 10,}, {color: dark ? COLORS.white : COLORS.greyscale900 }]}>Değişim:</Text>
+                <Text style={[{fontSize: 15, marginLeft: 10,}, {color: dark ? COLORS.white : COLORS.greyscale900 }]}>{t.change}:</Text>
                 <Text style={[{ fontSize: 15, marginLeft: 10, fontWeight: 'bold' },{ color: weightDifference >= 0 ? 'green' : 'red' },]}>{`${weightDifference} kg`}</Text>
               </View>
-              <Text style={[{fontSize: 15, marginLeft: 10,}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 15 }]}>{item.week}. Hafta</Text>
+              <Text style={[{fontSize: 15, marginLeft: 10,}, {color: dark ? COLORS.white : COLORS.greyscale900, marginTop: 15 }]}>{item.week}. {t.week}</Text>
               </>
         )}
 

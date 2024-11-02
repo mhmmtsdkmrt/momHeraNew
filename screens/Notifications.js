@@ -6,9 +6,19 @@ import { ScrollView } from 'react-native-virtualized-view';
 import NotificationCard from '../components/NotificationCard';
 import { notifications } from '../data';
 import { useTheme } from '../theme/ThemeProvider';
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const Notifications = ({ navigation }) => {
   const { colors, dark } = useTheme();
+  const { t } = useTranslation();
+
+
+  //** Düzenlenecek */
+  //** Düzenlenecek */
+  //** Düzenlenecek */
+  //** Düzenlenecek */
+  //** Düzenlenecek */
+  
   /**
    * Render Header
    */
@@ -30,7 +40,7 @@ const Notifications = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { 
           color: dark? COLORS.white : COLORS.greyscale900
-        }]}>Notifications</Text>
+        }]}>{t.notifications}</Text>
         <Text>{" "}</Text>
       </View>
     )

@@ -10,6 +10,16 @@ import Checkbox from 'expo-checkbox';
 import Button from '../components/Button';
 import { useTheme } from '../theme/ThemeProvider';
 
+
+
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+//** Düzenlenecek */
+
+
 const isTestMode = true
 
 const initialState = {

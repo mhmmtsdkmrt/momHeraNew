@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { COLORS, SIZES, icons } from '@/constants';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,8 @@ import Loading from '@/components/Loading';
 import { ScrollView } from 'react-native-virtualized-view';
 import RenderHTML from 'react-native-render-html';
 import axios from 'axios';
+import { useTranslation } from '@/Contexts/useTranslation';
+import { TranslationsContext } from '@/Contexts/LanguageContext';
 
 export default function HoroscopeDetailScreen({ route }) {
     const navigation = useNavigation();
@@ -17,6 +19,8 @@ export default function HoroscopeDetailScreen({ route }) {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { t } = useTranslation();
+    const { language } = useContext(TranslationsContext);
 
 
 
@@ -35,7 +39,7 @@ export default function HoroscopeDetailScreen({ route }) {
             params: {
             EnumMotherZodiac: momHoroscope,
             EnumBabyZodiac: babyHoroscope,
-            Language: 'tr'
+            Language: language
         }
         });
 
@@ -86,7 +90,7 @@ export default function HoroscopeDetailScreen({ route }) {
           </TouchableOpacity>
             <Text style={[styles.headerTitle, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}>Horoscope Compatibility</Text>
+            }]}>{t.horoscopeCompatibility}</Text>
          </View>
       </View>
     )

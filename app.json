@@ -13,13 +13,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mhmmtsdkmrt.momHera"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mhmmtsdkmrt.momHera"
     },
     "web": {
       "bundler": "metro",
@@ -29,5 +31,10 @@
     "plugins": [
       "expo-font"
     ],
+    "extra": {
+      "eas": {
+        "projectId": "f672df82-ee96-4d6b-962c-58501eef0dc6"
+      }
+    }
   }
 }

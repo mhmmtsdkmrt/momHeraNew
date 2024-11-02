@@ -10,9 +10,11 @@ import NotFoundCard from '../components/NotFoundCard';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Button from '../components/Button';
 import { FontAwesome } from "@expo/vector-icons";
+import { useTranslation } from '@/Contexts/useTranslation';
 
 const NoteForMyBabyScreen = ({ navigation }) => {
   const { dark, colors } = useTheme();
+  const { t } = useTranslation();
 
   /**
  * Render header
@@ -34,7 +36,7 @@ const NoteForMyBabyScreen = ({ navigation }) => {
           <Text style={[styles.headerTitle, { 
             color: dark? COLORS.white : COLORS.greyscale900
           }]}>
-            Note For My Baby
+            {t.noteForMyBaby}
           </Text>
         </View>
       </View>
@@ -49,7 +51,7 @@ const NoteForMyBabyScreen = ({ navigation }) => {
     <View style= {[{flex: 1, alignItems: 'center', justifyContent: 'center'} , { backgroundColor: colors.background }]}>
     <Text style={[{fontSize: 25}, {
               color: dark ? COLORS.white : COLORS.greyscale900
-            }]}> Coming Soon...</Text>
+            }]}>{t.comingSoon}</Text>
     </View>
 </View>
 </SafeAreaView>
