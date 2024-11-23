@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { COLORS, SIZES, icons } from '@/constants';
+import { COLORS, SIZES, icons, FONTS } from '@/constants';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -124,23 +124,25 @@ export default function HoroscopeDetailScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-    area: {
-        flex: 1,
-        backgroundColor: COLORS.white
-      },
-      container: {
-        flex: 1,
-        backgroundColor: COLORS.white,
-        width: SIZES.width - 32,
-      },
-    headerContainer: {
-        width: SIZES.width - 32,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginLeft: 12,
-        paddingTop: getStatusBarHeight(),
-      },
+  area: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    justifyContent: 'center',
+    paddingHorizontal: 5
+  },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
+
+        headerContainer: {
+            flexDirection: "row",
+            width: SIZES.width - 32,
+            justifyContent: "space-between",
+            margin: 10,
+            paddingTop: getStatusBarHeight(),
+        },
+
       headerLeftContainer: {
         flexDirection: "row",
         alignItems: "center"
@@ -151,54 +153,72 @@ const styles = StyleSheet.create({
         tintColor: COLORS.black
       },
       headerTitle: {
-        fontSize: 22,
-        fontFamily: "bold",
-        color: COLORS.greyscale900,
-        marginLeft: 12
-      },
-      htmlStyles: {
-        h3: {
+        fontSize: 20,
+        fontFamily: 'bold',
+        color: COLORS.black,
+        marginLeft: 16,
+        marginRight: 7
+    },
+
+        htmlStyles: {
+          h2: {
+            ...FONTS.body2,
             color: COLORS.primary,
             fontSize: 22,
-            fontWeight: 'bold',
-            marginVertical: 5,
-        },
-        h4: {
-            color: COLORS.primary,
-            fontSize: 18,
-            fontWeight: 'bold',
-            marginVertical: 4,
-        },
-        ol: {
-          fontSize: 16,
-          marginVertical: 2,
-
-        },
-        p: {
+            fontWeight: '600', 
+            marginVertical: 15
+          },
+          h3: {
+              ...FONTS.body2,
+              color: COLORS.primary,
+              fontSize: 22,
+              fontWeight: '300', 
+              marginVertical: 5,
+          },
+          h4: {
+              ...FONTS.body2,
+              color: COLORS.primary,
+              fontSize: 18,
+              fontWeight: '300', 
+              marginVertical: 4,
+          },
+          ol: {
+            ...FONTS.body2,
             fontSize: 16,
-            marginVertical: 5,
-
-        },
-        ul: {
-            marginVertical: 5,
-
-        },
-        strong: {
-            color: COLORS.primary,
-
-        },
-        li: {
-            fontSize: 16,
+            fontWeight: '300', 
             marginVertical: 2,
-
-        },
-    },
-    HTLMcontainer: {
-        flex: 1,
-        marginTop: 20,
-        justifyContent: 'center',
-        alignContent: 'center',
-        margin: 10
-
+  
+          },
+          p: {
+              ...FONTS.body2,
+              fontSize: 16,
+              fontWeight: '300', 
+              marginVertical: 5,
+  
+          },
+          ul: {
+              ...FONTS.body2,
+              fontWeight: '300', 
+              marginVertical: 5,
+  
+          },
+          strong: {
+              ...FONTS.body2,
+              fontWeight: '300', 
+              color: COLORS.primary,
+          },
+          li: {
+              ...FONTS.body2,
+              fontSize: 16,
+              fontWeight: '300', 
+              marginVertical: 2,
+  
+          },
+      HTMLcontainer: {
+          flex: 1,
+          justifyContent: 'center',
+          alignContent: 'center',
+          marginLeft: 5
+      }
     }
 })

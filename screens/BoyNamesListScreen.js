@@ -1,57 +1,61 @@
-import { FlatList, Image, LayoutAnimation, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, LayoutAnimation, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, icons } from '../constants';
-import { useTheme } from '@react-navigation/native';
-import { boyNamesSeries, boyNamesSeriesDetail } from '../data';
+import { useRoute, useTheme } from '@react-navigation/native';
 import { useTranslation } from '@/Contexts/useTranslation';
+import FindNameApi from '@/apiConnections/FindNameApi';
 
-export default function BoyNamesListScreen() {
+export default function BoyNamesListScreen({ navigation }) {
     const { dark, colors } = useTheme(); 
     const [searchText, setSearchText] = useState('');
     const [selectedKeywords, setSelectedKeywords] = useState([]);
     const [expanded, setExpanded] = useState(-1);
     const { t } = useTranslation();
 
+    const route = useRoute();
+    const { EnumCinsiyet, EnumNameType, headerTitle } = route.params
+    const [ data ] = FindNameApi(EnumCinsiyet, EnumNameType);
 
-    const handleKeywordPress = (id) => {
-        setSelectedKeywords((prevSelectedKeywords) => {
-            const selectedKeyword = boyNamesSeries.find((keyword) => keyword.id === id);
 
-            if (!selectedKeyword) {
-                // Handle the case where the keyword with the provided id is not found
-                return prevSelectedKeywords;
-            }
+    // const handleKeywordPress = (name) => {
+    //     setSelectedKeywords((prevSelectedKeywords) => {
+    //         const selectedKeyword = data.find((keyword) => keyword.name === name);
 
-            if (prevSelectedKeywords.includes(selectedKeyword.name)) {
-                return prevSelectedKeywords.filter((keyword) => keyword !== selectedKeyword.name);
-            } else {
-                return [...prevSelectedKeywords, selectedKeyword.name];
-            }
-        });
-    };
+    //         if (!selectedKeyword) {
+    //             // Handle the case where the keyword with the provided id is not found
+    //             return prevSelectedKeywords;
+    //         }
 
-    const KeywordItem = ({ item, onPress, selected }) => {
-        const itemStyle = {
-            paddingHorizontal: 14,
-            marginHorizontal: 5,
-            borderRadius: 21,
-            height: 39,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderColor: COLORS.primary,
-            borderWidth: 1,
-            backgroundColor: selected ? COLORS.primary : "transparent",
-        };
+    //         if (prevSelectedKeywords.includes(selectedKeyword.name)) {
+    //             return prevSelectedKeywords.filter((keyword) => keyword !== selectedKeyword.name);
+    //         } else {
+    //             return [...prevSelectedKeywords, selectedKeyword.name];
+    //         }
+    //     });
+    // };
 
-        return (
-            <TouchableOpacity style={itemStyle} onPress={() => onPress(item.id)}>
-                <Text style={{ color: selected ? COLORS.white : COLORS.primary }}>
-                    {item.name}
-                </Text>
-            </TouchableOpacity>
-        );
-    };
+    // const KeywordItem = ({ item, onPress, selected }) => {
+    //     const itemStyle = {
+    //         paddingHorizontal: 14,
+    //         marginHorizontal: 5,
+    //         borderRadius: 21,
+    //         height: 39,
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         borderColor: COLORS.primary,
+    //         borderWidth: 1,
+    //         backgroundColor: selected ? COLORS.primary : "transparent",
+    //     };
+
+    //     return (
+    //         <TouchableOpacity style={itemStyle} onPress={() => onPress(item.id)}>
+    //             <Text style={{ color: selected ? COLORS.white : COLORS.primary }}>
+    //                 {item.name}
+    //             </Text>
+    //         </TouchableOpacity>
+    //     );
+    // };
 
     const toggleExpand = (index) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -78,7 +82,7 @@ export default function BoyNamesListScreen() {
                     </TouchableOpacity>
                         <Text style={[styles.headerTitle, { 
                             color: dark? COLORS.white : COLORS.greyscale900
-                            }]}>{t.babyBoyNames}</Text>
+                            }]}>{headerTitle}</Text>
                 </View>
                 
                 </View>
@@ -91,7 +95,7 @@ export default function BoyNamesListScreen() {
         {renderHeader()}
 
         <View>
-            <View style={{ marginVertical: 16 }}>
+            {/* <View style={{ marginVertical: 16 }}>
                 <FlatList
                     data={boyNamesSeries}
                     horizontal
@@ -105,7 +109,7 @@ export default function BoyNamesListScreen() {
                         />
                     )}
                 />
-            </View>
+            </View> */}
             <View
                 style={[
                     styles.searchBar,
@@ -137,7 +141,7 @@ export default function BoyNamesListScreen() {
                                 : COLORS.grayscale400,
                         },
                     ]}
-                    placeholder="Search"
+                    placeholder={t.search}
                     placeholderTextColor={
                         dark ? COLORS.greyscale600 : COLORS.grayscale400
                     }
@@ -149,7 +153,7 @@ export default function BoyNamesListScreen() {
                 showsVerticalScrollIndicator={false}
                 style={{ marginVertical: 22 }}
             >
-                {boyNamesSeriesDetail
+                {data
                     .filter((boyNames) => {
                         if (selectedKeywords.length === 0) return true;
                         // console.log(selectedKeywords);
@@ -159,9 +163,8 @@ export default function BoyNamesListScreen() {
                         );
                     })
                     .filter((boyNames) =>
-                    boyNames.question.toLowerCase().includes(searchText.toLowerCase())
-                    )
-                    .map((boyNames, index) => (
+                    boyNames.harf?.toLowerCase().includes(searchText?.toLowerCase() || "")
+                    ).map((boyNames, index) => (
                         <View key={index} style={[styles.faqContainer, { 
                             backgroundColor: dark? COLORS.dark2 : COLORS.grayscale100,
                         }]}>
@@ -172,7 +175,7 @@ export default function BoyNamesListScreen() {
                                 <View style={styles.questionContainer}>
                                     <Text style={[styles.question, { 
                                         color: dark? COLORS.white : COLORS.black,
-                                    }]}>{boyNames.question}</Text>
+                                    }]}>{boyNames.harf} {t.namesStartingWith}</Text>
                                     <Text style={[styles.icon, { 
                                         color: dark? COLORS.white : COLORS.black,
                                     }]}>
@@ -181,9 +184,15 @@ export default function BoyNamesListScreen() {
                                 </View>
                             </TouchableOpacity>
                             {expanded === index && (
-                                <Text style={[styles.answer, { 
-                                    color: dark? COLORS.secondaryWhite : COLORS.gray2
-                                }]}>{boyNames.answer}</Text>
+                                    <View style={styles.answerContainer}>
+                                        {boyNames.isimListesi.map((isim, idx) => (
+                                            <Text key={idx} style={[styles.answer, { 
+                                            color: dark ? COLORS.secondaryWhite : COLORS.gray2
+                                            }]}>
+                                            <Text style={{ fontWeight: "bold" }}>{isim.name}</Text>: {isim.shortDescription}
+                                            </Text>
+                                            ))}
+                                    </View>
                             )}
                         </View>
                     ))}

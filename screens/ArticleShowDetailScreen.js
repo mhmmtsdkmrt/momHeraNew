@@ -1,7 +1,7 @@
 import { Image, SafeAreaView, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { COLORS, SIZES, icons } from '../constants'
+import { COLORS, SIZES, icons, FONTS } from '../constants'
 import { useTheme } from '../theme/ThemeProvider'
 import Header from '../components/Header';
 import Loading from '@/components/Loading'
@@ -104,6 +104,8 @@ export default function ArticleShowDetailScreen({ route, navigation }) {
 const source = {
   html: content
 }
+
+console.log(source)
   
   return (
     <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
@@ -112,7 +114,7 @@ const source = {
 
 
             <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.HTLMcontainer}>
+            <View style={styles.HTMLcontainer}>
                             <RenderHTML
                                     source={source}
                                     tagsStyles={styles.htmlStyles}
@@ -186,56 +188,66 @@ const styles = StyleSheet.create({
           width: 24,
           tintColor: COLORS.black
         },
-        body: {
-            fontSize: 14,
-            fontFamily: "regular",
-            color: COLORS.black,
-            marginTop: 4
-        },
         htmlStyles: {
+          h2: {
+            ...FONTS.body2,
+            color: COLORS.primary,
+            fontSize: 22,
+            fontWeight: '600', 
+            marginVertical: 15
+          },
           h3: {
+              ...FONTS.body2,
               color: COLORS.primary,
               fontSize: 22,
-              fontWeight: 'bold',
+              fontWeight: '300', 
               marginVertical: 5,
           },
           h4: {
+              ...FONTS.body2,
               color: COLORS.primary,
               fontSize: 18,
-              fontWeight: 'bold',
+              fontWeight: '300', 
               marginVertical: 4,
           },
           ol: {
+            ...FONTS.body2,
             fontSize: 16,
+            fontWeight: '300', 
             marginVertical: 2,
   
           },
           p: {
+              ...FONTS.body2,
               fontSize: 16,
+              fontWeight: '300', 
               marginVertical: 5,
   
           },
           ul: {
+              ...FONTS.body2,
+              fontWeight: '300', 
               marginVertical: 5,
   
           },
           strong: {
+              ...FONTS.body2,
+              fontWeight: '300', 
               color: COLORS.primary,
-  
           },
           li: {
+              ...FONTS.body2,
               fontSize: 16,
+              fontWeight: '300', 
               marginVertical: 2,
   
           },
       },
-      HTLMcontainer: {
+      HTMLcontainer: {
           flex: 1,
-          marginTop: 20,
           justifyContent: 'center',
           alignContent: 'center',
-          margin: 10
-  
+          marginLeft: 5
       }
 })
 

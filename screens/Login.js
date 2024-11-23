@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, ScrollView, Image, Alert, TouchableOpacity } from 'react-native';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
+import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, icons, images } from '../constants';
-import Header from '../components/Header';
 import { reducer } from '../utils/reducers/formReducers';
 import { validateInput } from '../utils/actions/formActions';
 import Input from '../components/Input';
@@ -11,13 +10,9 @@ import Button from '../components/Button';
 import SocialButton from '../components/SocialButton';
 import OrSeparator from '../components/OrSeparator';
 import { useTheme } from '../theme/ThemeProvider';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiLogin } from '../apiConnections/RegisterApi';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from '../Contexts/useTranslation';
-
-
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 
 const isTestMode = false
@@ -42,6 +37,45 @@ const Login = ({ navigation }) => {
   const { colors, dark } = useTheme();
 
   const {t} = useTranslation();
+
+  const refRBSheet = useRef();
+  const [alertType, setAlertType] = useState(null);
+
+  const alertContents = {
+    formIsValid: {
+      title: t.invalid,
+      message: t.pleaseCheckInput,
+      buttons: [
+        {
+          title: t.ok,
+          styleType: "primary",
+          onPress: () => refRBSheet.current.close(),
+        },
+      ]
+    },
+    notSuccess: {
+      title: t.anErrorOccured, 
+      message: t.pleaseCheckInput,
+      buttons: [
+        {
+          title: t.ok,
+          styleType: "secondary",
+          onPress: () => refRBSheet.current.close(),
+        },
+        {
+          title: t.resetPassword,
+          styleType: "primary",
+          onPress: ()=>navigation.navigate("ForgotPasswordMethods"),
+
+        },
+      ],
+    },
+  };
+
+  const handleShowAlert = (type) => {
+    setAlertType(type);
+    refRBSheet.current.open();
+  };
 
 
   const inputChangedHandler = useCallback(
@@ -80,36 +114,23 @@ const Login = ({ navigation }) => {
     const email = formState.inputValues.email;
     const password = formState.inputValues.password;
 
-    if (!formState.formIsValid) {
-      Alert.alert(`${t.invalid}`, `${t.pleaseCheckInput}`, [
-        {
-          text: `${t.ok}`,
-          onPress: () => null
-        },
-      ]);
-      return;
-    }
+    // alert 1
 
-    setIsLoading(true);
+    if (!formState.formIsValid) {
+      handleShowAlert('formIsValid');
+    }else {
 
     const result = await apiLogin(email, password);
     setIsLoading(false);
 
+    // alert 2
 
     if (result.success) {
       navigation.navigate("Main"); // Bir sonraki sayfaya yönlendirme
     } else {
-      Alert.alert(`${t.anErrorOccured}`, `${t.pleaseCheckInput}`, [
-        {
-          text: `${t.resetPassword}`,
-          onPress: ()=>navigation.navigate("ForgotPasswordMethods")
-        },
-        {
-          text: `${t.ok}`,
-          onPress: () => null
-        },
-      ]);
+      handleShowAlert('notSuccess');
     }
+  };
   };
 
   return (
@@ -168,21 +189,6 @@ const Login = ({ navigation }) => {
               onPress={handleLogin}
               style={styles.button}
             />
-              <View style={{ height: 50}}>
-              <LinearGradient colors={['#f85032', '#ff9068']} style={{ flex: 1, paddingLeft: 15, paddingRight: 15, borderRadius: 25}}>
-                <Text style={{ fontSize: 18, fontFamily: 'semiBold', textAlign: 'center', margin: 10, color: '#ffffff', backgroundColor: 'transparent'}}>Login</Text>
-              </LinearGradient>
-              </View>
-              <View style={{ height: 50, marginTop: 10}}>
-              <LinearGradient start={[0, 0.5]} end={[1, 0.5]} colors={['#ff6e7f', '#bfe9ff']} style={{ flex: 1, paddingLeft: 15, paddingRight: 15, borderRadius: 25}}>
-                <Text style={{ fontSize: 18, fontFamily: 'semiBold', textAlign: 'center', margin: 10, color: '#ffffff', backgroundColor: 'transparent'}}>Login</Text>
-              </LinearGradient>
-              </View>
-              <View style={{ height: 50, marginTop: 10}}>
-              <LinearGradient start={[1, 0.5]} end={[0, 0.5]} colors={['#ED4264', '#FFEDBC']} background='right' style={{ flex: 1, paddingLeft: 15, paddingRight: 15, borderRadius: 25}}>
-                <Text style={{ fontSize: 18, fontFamily: 'semiBold', textAlign: 'center', margin: 10, color: '#ffffff', backgroundColor: 'transparent'}}>Login</Text>
-              </LinearGradient>
-              </View>
 
 
 
@@ -218,6 +224,60 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
             </View>
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        height={SIZES.height * 0.8}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+          },
+          draggableIcon: {
+            backgroundColor: dark ? COLORS.gray2 : COLORS.grayscale200,
+            height: 4,
+          },
+          container: {
+            borderTopRightRadius: 32,
+            borderTopLeftRadius: 32,
+            height: 260,
+            backgroundColor: dark ? COLORS.dark2 : COLORS.white
+          },
+        }}
+      >
+        {/* Dinamik İçerik */}
+        {alertType && (
+          <>
+            <Text style={styles.bottomTitle}>{alertContents[alertType].title}</Text>
+            <View style={styles.separateLine} />
+            <Text style={styles.bottomSubtitle}>{alertContents[alertType].message}</Text>
+            <View style={styles.bottomButtonContainer}>
+              {alertContents[alertType].buttons.map((button, index) => (
+
+               button.styleType === "primary" ? (
+                <Button
+                  key={index}
+                  title={button.title}
+                  style={styles.primaryButton}
+                  textColor={COLORS.primary}
+                  onPress={button.onPress}
+                  filled
+                />)
+                : ( 
+                  <Button
+                  key={index}
+                  title={button.title}
+                  style={styles.secondaryButton}
+                  textColor={COLORS.primary}
+                  onPress={button.onPress}
+                  />
+                  )
+
+          ))}
+            </View>
+          </>
+        )}
+      </RBSheet>
 
       </View>
     </SafeAreaView>
@@ -296,7 +356,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'center',
     marginVertical: 30,
     position: "relative",
     bottom: 12,
@@ -324,6 +384,48 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     textAlign: "center",
     marginTop: 12
+  },
+  bottomTitle: {
+    fontSize: 24,
+    fontFamily: "semiBold",
+    color: COLORS.primary,
+    textAlign: "center",
+    marginTop: 12
+  },
+  bottomSubtitle: {
+    fontSize: 20,
+    fontFamily: "semiBold",
+    color: COLORS.greyscale900,
+    textAlign: "center",
+    marginVertical: 28
+  },
+  separateLine: {
+    width: SIZES.width,
+    height: 1,
+    backgroundColor: COLORS.grayscale200,
+    marginTop: 12
+  },
+  primaryButton: {
+    width: (SIZES.width - 32) / 2 - 8,
+    backgroundColor: COLORS.tansparentPrimary,
+    borderRadius: 32,
+    borderColor: COLORS.tansparentPrimary,
+  },
+  secondaryButton: {
+    width: (SIZES.width - 32) / 2 - 8,
+    backgroundColor: COLORS.primary,
+    borderRadius: 32
+  },
+  bottomButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'space-between',
+    marginVertical: 30,
+    marginHorizontal: 16,
+    position: "relative",
+    bottom: 12,
+    right: 0,
+    left: 0,
   }
 })
 

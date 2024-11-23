@@ -1,23 +1,29 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useNavigation, useTheme } from '@react-navigation/native';
-import { COLORS, SIZES, images } from '../constants';
+import { COLORS, SIZES, images, icons, FONTS } from '../constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from '@/Contexts/useTranslation';
 
-export default function BoyNames({image}) {
+export default function BoyNames() {
 
     const navigation = useNavigation();
     const { dark, colors } = useTheme();
     const { t } = useTranslation();
+    
+    const navigateToListScreen = (nameType, gender, headerTitle) => {
+        navigation.navigate('BoyNamesListScreen', {EnumNameType: nameType, EnumCinsiyet: gender, headerTitle: headerTitle});
+    }
+
 
   return (
-    <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
-    <TouchableOpacity onPress={()=> navigation.navigate('BoyNamesListScreen')} style={[styles.container, { 
+    <SafeAreaView style={[styles.area]}>
+
+    <TouchableOpacity onPress={()=> navigateToListScreen(1, 2, t.babyBoyNames)} style={[styles.container, { 
         backgroundColor: dark ? COLORS.dark2 : COLORS.white,
     }]}>
         <Image
-          source={images.logo}
+          source={icons.boyNames3}
           resizeMode='cover'
           style={styles.image}
         />
@@ -25,16 +31,14 @@ export default function BoyNames({image}) {
             <Text style={[styles.name, { 
                 color: dark ? COLORS.white : COLORS.black,
             }]}>{t.babyBoyNames}</Text>
-            {/* <Text style={[styles.description, { 
-                color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-            }]}>{description}</Text> */}
+
         </View>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.container, { 
+    <TouchableOpacity onPress={()=> navigateToListScreen(2, 2, t.modernBabyBoyNames)} style={[styles.container, { 
         backgroundColor: dark ? COLORS.dark2 : COLORS.white,
     }]}>
         <Image
-          source={images.logo}
+          source={icons.boyNames1}
           resizeMode='cover'
           style={styles.image}
         />
@@ -42,16 +46,13 @@ export default function BoyNames({image}) {
             <Text style={[styles.name, { 
                 color: dark ? COLORS.white : COLORS.black,
             }]}>{t.modernBabyBoyNames}</Text>
-            {/* <Text style={[styles.description, { 
-                color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-            }]}>{description}</Text> */}
         </View>
     </TouchableOpacity>
-    <TouchableOpacity style={[styles.container, { 
+    <TouchableOpacity onPress={()=> navigateToListScreen(3, 2, t.binaryBabyBoyNames)} style={[styles.container, { 
         backgroundColor: dark ? COLORS.dark2 : COLORS.white,
     }]}>
         <Image
-          source={images.logo}
+          source={icons.boyNames2}
           resizeMode='cover'
           style={styles.image}
         />
@@ -59,11 +60,9 @@ export default function BoyNames({image}) {
             <Text style={[styles.name, { 
                 color: dark ? COLORS.white : COLORS.black,
             }]}>{t.binaryBabyBoyNames}</Text>
-            {/* <Text style={[styles.description, { 
-                color: dark ? COLORS.grayscale400 : COLORS.grayscale700,
-            }]}>{description}</Text> */}
         </View>
     </TouchableOpacity>
+
     </SafeAreaView>
   )
 };
@@ -71,38 +70,41 @@ export default function BoyNames({image}) {
 const styles = StyleSheet.create({
     area: {
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
       },
       container: {
         flexDirection: "row",
-        height: 132,
+        height: 110,
         backgroundColor: COLORS.white,
-        width: SIZES.width - 32,
-        borderRadius: 18,
+        width: SIZES.width - 45,
+        borderRadius: 11,
+        marginLeft: 4,
         paddingHorizontal: 8,
         paddingVertical: 8,
-        marginBottom: 10
+        marginBottom: 9,
+        borderColor: '#608BC1',
+        borderWidth: 0.3,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10
     },
     image: {
-        width: 112,
-        height: 112,
-        borderRadius: 22,
+        width: 90,
+        height: 90,
         marginRight: 12,
     },
     rightContainer: {
         marginLeft: 12,
         flex: 1,
+        height: 100,
         paddingVertical: 30,
     },
     name: {
-        fontSize: 18,
-        fontFamily: "bold",
+        fontWeight: 600,
+        ...FONTS.body3,
+        fontSize: 18, 
         color: COLORS.black
-    },
-    description: {
-        fontSize: 14,
-        color: COLORS.grayscale700,
-        fontFamily: "medium",
-        marginVertical: 12
     },
 })

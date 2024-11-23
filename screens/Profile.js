@@ -229,11 +229,11 @@ const Profile = ({ navigation }) => {
               source={icons.logout}
               resizeMode='contain'
               style={[styles.logoutIcon, {
-                tintColor: "red"
+                tintColor: COLORS.primary
               }]}
             />
             <Text style={[styles.logoutName, {
-              color: "red"
+              color: COLORS.primary
             }]}>{t.logout}</Text>
           </View>
         </TouchableOpacity>
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
   bottomTitle: {
     fontSize: 24,
     fontFamily: "semiBold",
-    color: "red",
+    color: COLORS.primary,
     textAlign: "center",
     marginTop: 12
   },

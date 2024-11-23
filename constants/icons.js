@@ -223,7 +223,14 @@ const drugs = require('../assets/icons/drugs.png');
 const aboutUs = require('../assets/icons/aboutUs.png');
 const contraction = require('../assets/icons/contraction.png')
 const kicks = require('../assets/icons/kicks.png');
-const babystep = require('../assets/icons/baby-step.gif')
+const babystep = require('../assets/icons/baby-step.gif');
+const maths = require('../assets/icons/maths.gif');
+const boyNames1 = require('../assets/icons/boyNames1.png');
+const boyNames2 = require('../assets/icons/boyNames2.png');
+const boyNames3 = require('../assets/icons/boyNames3.png');
+const girlNames1 = require('../assets/icons/girlNames1.png');
+const girlNames2 = require('../assets/icons/girlNames2.png');
+const girlNames3 = require('../assets/icons/girlNames3.png');
 
 export default {
     addFileOutline,
@@ -452,5 +459,12 @@ export default {
     aboutUs,
     contraction,
     kicks,
-    babystep
+    babystep,
+    maths,
+    girlNames1,
+    girlNames2,
+    girlNames3,
+    boyNames1,
+    boyNames2,
+    boyNames3
 }

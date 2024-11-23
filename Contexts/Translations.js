@@ -139,6 +139,7 @@ export default {
         modernBabyGirlNames: 'Modern Kız Bebek İsimleri',
         binaryBabyBoyNames: 'İkili Erkek Bebek İsimleri',
         binaryBabyGirlNames: 'İkili Kız Bebek İsimleri',
+        namesStartingWith: 'ile başlayan isimler',
         //Hamilelik Hesaplama
         calculateYourDate: 'Doğum tarihinizi hesaplayın',
         setPregnancyDate: 'Doğum Tarihinizi Belirleyin',
@@ -390,6 +391,7 @@ export default {
         modernBabyGirlNames: 'Modern Baby Girl Names',
         binaryBabyBoyNames: 'Binary Baby Boy Names',
         binaryBabyGirlNames: 'Binary Baby Girl Names',
+        namesStartingWith: 'Names starting with',
         //Pregnancy Calculator
         calculateYourDate: 'Calculate your date of birth',
         setPregnancyDate: 'Set Your Birth Date',
@@ -639,6 +641,7 @@ export default {
         modernBabyGirlNames: 'Moderne Baby-Girl-Namen',
         binaryBabyBoyNames: 'Binäre Baby-Jungen-Namen',
         binaryBabyGirlNames: 'Binäre Baby-Mädchennamen',
+        namesStartingWith: 'Namen beginnend mit',
         //Schwangerschaftsrechner
         calculateYourDate: 'Berechnen Sie Ihr Geburtsdatum',
         setPregnancyDate: 'Legen Sie Ihr Geburtsdatum fest',
@@ -888,6 +891,7 @@ export default {
         modernBabyGirlNames: 'Nombres modernos de bebé niña',
         binaryBabyBoyNames: 'Binary Baby Boy Names',
         binaryBabyGirlNames: 'Binary Baby Girl Names',
+        namesStartingWith: 'Nombres que empiezan por',
         //Calculadora de embarazo
         calculateYourDate: 'Calcula tu fecha de nacimiento',
         setPregnancyDate: 'Establece tu fecha de nacimiento',
@@ -1137,6 +1141,7 @@ export default {
         modernBabyGirlNames: "Noms modernes des bébés filles",
         binaryBabyBoyNames: "Noms binaires des bébés garçons",
         binaryBabyGirlNames: 'Noms binaires des bébés filles',
+        namesStartingWith: 'Noms commençant par',
         //Calculateur de grossesse
         calculateYourDate: 'Calculez votre date de naissance',
         setPregnancyDate: "Définissez votre date de naissance",
@@ -1390,6 +1395,7 @@ export default {
         modernBabyGirlNames: 'Nama Bayi Perempuan Modern',
         binaryBabyBoyNames: 'Nama Bayi Laki-Laki Biner',
         binaryBabyGirlNames: 'Nama Bayi Perempuan Biner',
+        namesStartingWith: 'Nama yang dimulai dengan',
         //Kalkulator Kehamilan
         calculateYourDate: 'Hitung tanggal lahir Anda',
         setPregnancyDate: 'Tetapkan Tanggal Kelahiran Anda',

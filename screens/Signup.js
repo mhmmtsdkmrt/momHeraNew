@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, icons, images } from '../constants';
 import { reducer } from '../utils/reducers/formReducers';
@@ -12,6 +12,7 @@ import OrSeparator from '../components/OrSeparator';
 import { useTheme } from '../theme/ThemeProvider';
 import { apiRegister } from '../apiConnections/RegisterApi';
 import { useTranslation } from '@/Contexts/useTranslation';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const isTestMode = false
 
@@ -39,6 +40,47 @@ const Signup = ({ navigation }) => {
 
   const { colors, dark } = useTheme();
   const { t } = useTranslation();
+
+  const refRBSheet = useRef();
+  const [alertType, setAlertType] = useState(null);
+
+  const alertContents = {
+    formIsValid: {
+      title: t.invalid,
+      message: t.pleaseCheckInput,
+      buttons: [
+        {
+          title: t.ok,
+          onPress: () => refRBSheet.current.close(),
+        },
+      ]
+    },
+    success: {
+      title: t.success,
+      message: t.successfullyRegistered,
+      buttons: [
+        {
+          title: t.ok,
+          onPress: () => navigation.navigate("FillYourProfile"),
+        }
+      ]
+    },
+    notSuccess: {
+      title: t.anErrorOccured, 
+      message: t.alreadyHave,
+      buttons: [
+        {
+          title: t.ok,
+          onPress: () => refRBSheet.current.close(),
+        },
+      ],
+    },
+  };
+
+  const handleShowAlert = (type) => {
+    setAlertType(type);
+    refRBSheet.current.open();
+  };
 
 
   const inputChangedHandler = useCallback(
@@ -89,17 +131,15 @@ const Signup = ({ navigation }) => {
     const { email, password } = formState.inputValues;
 
     if (!formState.formIsValid) {
-      Alert.alert(`${t.invalid}`, `${t.pleaseCheckInput}`);
-      return;
-    }
+      handleShowAlert('formIsValid');
+    } else
 
     try {
       const result = await apiRegister(email, password);
       if (result.success) {
-        Alert.alert(`${t.success}`, `${t.successfullyRegistered}`);
-        navigation.navigate("FillYourProfile");
+        handleShowAlert('success');
       } else {
-        Alert.alert(`${t.anErrorOccured}`, `${t.alreadyHave}`);
+        handleShowAlert('notSuccess');
       }
     } catch (error) {
       console.error(error);
@@ -198,7 +238,49 @@ const Signup = ({ navigation }) => {
           </TouchableOpacity>
         </View>
           </View>
+          <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        height={SIZES.height * 0.8}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+          },
+          draggableIcon: {
+            backgroundColor: dark ? COLORS.gray2 : COLORS.grayscale200,
+            height: 4,
+          },
+          container: {
+            borderTopRightRadius: 32,
+            borderTopLeftRadius: 32,
+            height: 260,
+            backgroundColor: dark ? COLORS.dark2 : COLORS.white
+          },
+        }}
+      >
+        {/* Dinamik İçerik */}
+        {alertType && (
+          <>
+            <Text style={styles.bottomTitle}>{alertContents[alertType].title}</Text>
+            <View style={styles.separateLine} />
+            <Text style={styles.bottomSubtitle}>{alertContents[alertType].message}</Text>
+            <View style={styles.bottomButtonContainer}>
+              {alertContents[alertType].buttons.map((button, index) => (
 
+                <Button
+                  key={index}
+                  title={button.title}
+                  style={styles.primaryButton}
+                  textColor={COLORS.primary}
+                  onPress={button.onPress}
+                  filled
+                />
+          ))}
+            </View>
+          </>
+        )}
+      </RBSheet>
 
       </View>
     </SafeAreaView>
@@ -298,6 +380,42 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     width: SIZES.width - 32,
     borderRadius: 30
+  },  bottomTitle: {
+    fontSize: 24,
+    fontFamily: "semiBold",
+    color: COLORS.primary,
+    textAlign: "center",
+    marginTop: 12
+  },
+  bottomSubtitle: {
+    fontSize: 20,
+    fontFamily: "semiBold",
+    color: COLORS.greyscale900,
+    textAlign: "center",
+    marginVertical: 28
+  },
+  separateLine: {
+    width: SIZES.width,
+    height: 1,
+    backgroundColor: COLORS.grayscale200,
+    marginTop: 12
+  },
+  primaryButton: {
+    width: (SIZES.width - 32) / 2 - 8,
+    backgroundColor: COLORS.tansparentPrimary,
+    borderRadius: 32,
+    borderColor: COLORS.tansparentPrimary,
+  },
+  bottomButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'center',
+    marginVertical: 30,
+    marginHorizontal: 16,
+    position: "relative",
+    bottom: 12,
+    right: 0,
+    left: 0,
   }
 })
 

@@ -214,8 +214,11 @@ const EditPregnancyInfo = ({ navigation }) => {
                                                 borderColor: dark? COLORS.dark2 : COLORS.greyscale500,
                                                 }]}
                                                 onPress={handleOnPressStartDate}
-                                                >{ startDateLocale === 'Invalid Date' ? <Text style={{ ...FONTS.body4, color: COLORS.grayscale400}}>{t.selectDate}</Text> : <Text style={{ ...FONTS.body4, color: COLORS.grayscale400}}>{startDateLocale}</Text>}
-                                                
+                                                >
+                                                {startDateLocale === "Select Date" ? 
+                                                (<Text style={{ ...FONTS, color: COLORS.grayscale400}}>{t.selectDate}</Text>) : 
+                                                (<Text style={{ ...FONTS, color: COLORS.grayscale400}}>{startDateLocale}</Text>)}
+
                                                 <Feather name="calendar" size={24} color={COLORS.grayscale400} />
                                             </TouchableOpacity> }  
 

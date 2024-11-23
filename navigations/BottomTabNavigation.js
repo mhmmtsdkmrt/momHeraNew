@@ -109,7 +109,7 @@ const BottomTabNavigation = () => {
             />
 
 
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="MyBaby"
                 component={ToolsScreen}
                 options={{
@@ -133,7 +133,7 @@ const BottomTabNavigation = () => {
                         )
                     },
                 }}
-            />
+            /> */}
              <Tab.Screen
                 name="Profile"
                 component={Profile}

@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, SIZES } from '../constants'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const Button = (props) => {
     const filledBgColor = props.color || COLORS.primary
@@ -17,10 +18,12 @@ const Button = (props) => {
     const isLoading = props.isLoading || false
 
     return (
+     
         <TouchableOpacity
             style={{
                 ...styles.btn,
-                ...{ backgroundColor: bgColor },
+                borderWidth: props.filled ? 0 : 4,
+                //...{ backgroundColor: bgColor },
                 ...props.style,
             }}
             onPress={props.onPress}
@@ -28,23 +31,33 @@ const Button = (props) => {
             {isLoading && isLoading == true ? (
                 <ActivityIndicator size="small" color={COLORS.white} />
             ) : (
+                <LinearGradient start={[1, 0.5]} end={[0, 0.5]} colors={props.filled ? ['#ED4264', '#FFEDBC'] : [bgColor, bgColor]} background='right' style={styles.gradient}>
                 <Text style={{ fontSize: 18 , fontFamily: "semiBold", ...{ color: textColor } }}>
                     {props.title}
                 </Text>
+                </LinearGradient>
             )}
         </TouchableOpacity>
+
     )
 }
 const styles = StyleSheet.create({
     btn: {
-        paddingHorizontal: SIZES.padding,
-        paddingVertical: SIZES.padding,
-        borderColor: COLORS.primary,
-        borderWidth: 1,
+        // paddingHorizontal: SIZES.padding,
+        // paddingVertical: SIZES.padding,
+        borderColor: COLORS.warning,
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
         height: 52,
+    },
+    gradient: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        borderRadius: 25,
     },
 })
 
